@@ -1,13 +1,13 @@
 import { Outlet } from "react-router";
-import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const MainLayout = () => {
   return (
-    <main className="flex ">
-      <section className="bg-red-500 w-1/6">
-        <Navbar />
+    <main className="flex bg-[#181818] text-white ">
+      <section className="w-2/5">
+        <Sidebar />
       </section>
-      <aside className="bg-black flex-auto text-teal-500">
+      <aside className=" flex-auto ml-4">
         <Outlet />
       </aside>
     </main>

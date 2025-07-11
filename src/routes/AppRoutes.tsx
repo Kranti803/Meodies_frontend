@@ -5,6 +5,7 @@ import SignUp from "../pages/SignUp";
 import MainLayout from "../layouts/MainLayout";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
+import SplashScreen from "../pages/SplashScreen";
 
 export const router = createBrowserRouter([
   {
@@ -32,5 +33,9 @@ export const router = createBrowserRouter([
   {
     path: "signin",
     element: <SignUp />,
+  },
+  {
+    path: "/splash",
+    element: <SplashScreen />,
   },
 ]);
