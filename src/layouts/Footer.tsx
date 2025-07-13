@@ -8,11 +8,11 @@ const Footer = () => {
         <h2 className="text-white text-xl font-bold mb-4">About</h2>
         <p className="text-sm leading-relaxed">
           Melodies is a website that has been created for over
-          <span className="text-pink-500 font-medium"> 5 year's </span>
+          <span className="text-[#62d962] font-medium"> 5 year's </span>
           now and it is one of the most famous music player website’s in the
           world. In this website you can listen and download songs for free.
           Also if you want no limitation you can buy our
-          <span className="text-blue-400 font-medium"> premium pass’s.</span>
+          <span className="text-[#62d962] font-medium"> premium pass’s.</span>
         </p>
       </div>
 
@@ -58,10 +58,10 @@ const Footer = () => {
       {/* Logo + Social Icons */}
       {/* <div className="col-span-full flex justify-between items-center mt-10 md:mt-0"> */}
       <div className="flex flex-col justify-between mt-10 md:mt-0 col-span-full lg:col-span-0">
-        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
+        <h2 className="text-3xl font-bold text-[#62d962]">
           Melodies
         </h2>
-        <div className="flex gap-x-4">
+        <div className="flex pt-4 gap-x-4">
           <i>
             <Instagram size={15} />
           </i>

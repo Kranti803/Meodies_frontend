@@ -55,12 +55,12 @@
 }
 
 //colors
-:root {
-  --color-primary: #1e40af;
-  --color-pink: #ee10b0;
-  --color-darkgray: #181818;
-  --color-lightgray: #1e1e1e;
-  --color-blue: #0e9eef;
+/* @theme {
+  --color-primary: #62d962;
+} */
+
+@theme {
+  --color-mint-500: oklch(0.72 0.11 178);
 }
 
 /* For Chrome, Safari, Edge, Opera */

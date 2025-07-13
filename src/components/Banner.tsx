@@ -12,7 +12,7 @@ const Banner = () => {
       <div className="absolute inset-0 backdrop-blur-[1px] text-sm grid grid-cols-12 items-center">
         <div className="col-span-12 md:col-span-6 px-6 md:px-16 space-y-6  z-10 pt-8 lg:pt-0">
           <h1 className=" text-2xl sm:text-3xl md:text-5xl font-extrabold text-white">
-            All the <span className="text-[#EE10B0]">Best Songs</span>
+            All the <span className="text-[#62d962]">Best Songs</span>
             <br /> in One Place
           </h1>
 
@@ -24,10 +24,10 @@ const Banner = () => {
           </p>
 
           <div className="flex gap-4 pt-10 lg:pt-0">
-            <button className="bg-[#EE10B0] text-white px-4 py-2 rounded-md font-semibold cursor-pointer hover:scale-90 transition-all ease-in-out  ">
+            <button className="bg-[#62d962] text-white px-4 py-2 rounded-md font-semibold cursor-pointer hover:scale-90 transition-all ease-in-out  ">
               Discover Now
             </button>
-            <button className="border border-blue-500 text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-blue-500 hover:text-white hover:scale-90 transition-all ease-in-out">
+            <button className="border border-[#62d962] text-[#62d962] px-4 py-2 rounded-md font-semibold hover:scale-90 transition-all ease-in-out">
               Create Playlist
             </button>
           </div>

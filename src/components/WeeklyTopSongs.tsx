@@ -68,7 +68,7 @@ export default function WeeklyTopSongs() {
     <div className="bg-transparent group text-white py-6 group relative scrollbar-hide">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold mb-4">
-          Weekly Top <span className="text-[#EE10B0]">Songs</span>
+          Weekly Top <span className="text-[#62d962]">Songs</span>
         </h2>
         <button className="text-sm font-semibold outline-none border-none bg-transparent cursor-pointer mb-4">
           View all
