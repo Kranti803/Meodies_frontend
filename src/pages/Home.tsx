@@ -4,7 +4,6 @@ import Footer from "../layouts/Footer";
 const Home = () => {
   return (
     <section className="min-h-screen">
-      {/* <Navbar /> */}
       <Main/>
       <Footer />
     </section>
