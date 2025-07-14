@@ -52,10 +52,18 @@ const MusicPlayer = () => {
   const [isMute, setIsMute] = useState(false);
   const [autoPlay, setAutoplay] = useState(false);
   const [currentSong, setCurrentSong] = useState(0);
-  // const [currentSongDuration, setCurrentSongDuration] = useState();
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [currentSongDuration, setCurrentSongDuration] = useState("0:00");
+  console.log(currentSongDuration)
+
+  const handleSongDuration=()=>{
+    if(audioRef.current?.duration){
+      setCurrentSongDuration((audioRef.current.duration).toString())
+    }
+  }
+
   const currentSongRef = useRef(0);
+  console.log(audioRef);
 
   const handlePlay = () => {
     if (!isPlaying) {
@@ -106,7 +114,7 @@ const MusicPlayer = () => {
     <>
       {/* audio tag */}
       <audio
-        // className="hidden"
+        className="hidden"
         ref={audioRef}
         src={songs[currentSong].src} // change this to your audio URL or file
         controls
@@ -177,12 +185,17 @@ const MusicPlayer = () => {
           </div>
 
           {/* Progress bar */}
-          <div className="flex items-center gap-2 w-full text-xs text-gray-400 mt-2">
+          <div className="flex items-center justify-center gap-2 w-full text-xs text-gray-400 mt-2">
             <span>0:00</span>
-            <div className="md:w-full h-1 bg-gray-700 rounded-full">
-              <div className="h-1 bg-[#62d962] w-[100%] rounded-full" />
-            </div>
-            <span>3:26</span>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              className="w-5xl h-1 accent-[#62d962] cursor-pointer"
+            />
+            <span>
+              {currentSongDuration}
+            </span>
           </div>
         </div>
 
