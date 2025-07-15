@@ -53,17 +53,12 @@ const MusicPlayer = () => {
   const [autoPlay, setAutoplay] = useState(false);
   const [currentSong, setCurrentSong] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [currentSongDuration, setCurrentSongDuration] = useState("0:00");
-  console.log(currentSongDuration)
-
-  const handleSongDuration=()=>{
-    if(audioRef.current?.duration){
-      setCurrentSongDuration((audioRef.current.duration).toString())
-    }
-  }
+  const [currentSongDuration, setCurrentSongDuration] = useState(0);
+  const [currentSongTotalDuration, setCurrentSongTotalDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+  console.log(audioRef.current?.volume);
 
   const currentSongRef = useRef(0);
-  console.log(audioRef);
 
   const handlePlay = () => {
     if (!isPlaying) {
@@ -74,6 +69,25 @@ const MusicPlayer = () => {
       audioRef?.current?.pause();
     }
   };
+
+  const handleSeekTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (audioRef.current) audioRef.current.currentTime = Number(e.target.value);
+  };
+
+  const handleCurrentSongVolume = () => {
+    if (audioRef.current) {
+      setVolume(audioRef.current.volume);
+    }
+  };
+
+const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const newVolume = Number(e.target.value);
+  if (audioRef.current) {
+    audioRef.current.volume = newVolume;
+    setVolume(newVolume); // <-- add this
+  }
+};
+
 
   const handleNext = () => {
     if (currentSongRef.current < songs.length - 1) {
@@ -101,27 +115,51 @@ const MusicPlayer = () => {
     setIsPlaying(true);
   };
 
+  const handleSongTotalDuration = () => {
+    if (audioRef.current) {
+      setCurrentSongTotalDuration(Math.floor(audioRef.current.duration));
+    }
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const updateTime = () => {
+      setCurrentSongDuration(audio.currentTime);
+    };
+
+    audio.addEventListener("timeupdate", updateTime);
+
+    return () => {
+      audio.removeEventListener("timeupdate", updateTime);
+    };
+  }, []);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     const handleSongEnded = () => setIsPlaying(false);
-    audioRef.current?.addEventListener("ended", handleSongEnded);
-    return () =>
-      audioRef.current?.removeEventListener("ended", handleSongEnded);
+    audio.addEventListener("ended", handleSongEnded);
+    return () => audio.removeEventListener("ended", handleSongEnded);
   }, []);
 
   return (
     <>
       {/* audio tag */}
       <audio
-        className="hidden"
+        // className="hidden"
         ref={audioRef}
-        src={songs[currentSong].src} // change this to your audio URL or file
+        src={songs[currentSong].src}
         controls
         controlsList="nodownload"
         loop={isRepeat}
         muted={isMute}
         autoPlay={autoPlay}
+        onLoadedMetadata={() => {
+          handleCurrentSongVolume();
+          handleSongTotalDuration();
+        }}
       />
       <div className="h-28 fixed bottom-0 left-0 right-0 bg-[#1f1f1f] text-white shadow-lg px-4 py-3 flex items-center justify-center sm:justify-between z-50">
         {/* Song Info */}
@@ -143,10 +181,7 @@ const MusicPlayer = () => {
         <div className="flex flex-col items-center gap-1 w-1/3">
           <div className="flex items-center gap-8 sm:gap-4">
             {/* Shuffle */}
-            <button
-              className="
-             text-[#62d962]hover:text-[#62d962] cursor-pointer border-none outline-none"
-            >
+            <button className=" hover:text-[#62d962] cursor-pointer border-none outline-none">
               <Shuffle size={18} />
             </button>
 
@@ -174,7 +209,7 @@ const MusicPlayer = () => {
             {/* Repeat */}
             <button
               onClick={() => setIsRepeat(!isRepeat)}
-              className="text-[#62d962]hover:text-[#62d962] cursor-pointer border-none outline-none"
+              className="hover:text-[#62d962] cursor-pointer border-none outline-none"
             >
               {isRepeat ? (
                 <Repeat size={18} className="text-[#62d962]" />
@@ -186,15 +221,23 @@ const MusicPlayer = () => {
 
           {/* Progress bar */}
           <div className="flex items-center justify-center gap-2 w-full text-xs text-gray-400 mt-2">
-            <span>0:00</span>
+            <span>
+              {new Date(currentSongDuration * 1000)
+                .toISOString()
+                .substring(14, 19)}
+            </span>
             <input
               type="range"
               min="0"
-              max="100"
+              max={currentSongTotalDuration}
+              value={currentSongDuration}
+              onChange={(e) => handleSeekTime(e)}
               className="w-5xl h-1 accent-[#62d962] cursor-pointer"
             />
             <span>
-              {currentSongDuration}
+              {new Date(currentSongTotalDuration * 1000)
+                .toISOString()
+                .substring(14, 19)}
             </span>
           </div>
         </div>
@@ -205,12 +248,15 @@ const MusicPlayer = () => {
             className="border-none outline-none cursor-pointer"
             onClick={() => setIsMute(!isMute)}
           >
-            {isMute ? <VolumeX size={18} /> : <Volume2 size={18} />}
+            {(isMute===true || volume===0)? <VolumeX size={18} /> : <Volume2 size={18} />}
           </button>
           <input
             type="range"
             min="0"
-            max="100"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={(e) => handleVolumeChange(e)}
             className="w-24 h-1 accent-[#62d962] cursor-pointer"
           />
         </div>
