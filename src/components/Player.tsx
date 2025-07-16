@@ -52,12 +52,11 @@ const MusicPlayer = () => {
   const [isMute, setIsMute] = useState(false);
   const [autoPlay, setAutoplay] = useState(false);
   const [currentSong, setCurrentSong] = useState(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentSongDuration, setCurrentSongDuration] = useState(0);
   const [currentSongTotalDuration, setCurrentSongTotalDuration] = useState(0);
   const [volume, setVolume] = useState(1);
-  console.log(audioRef.current?.volume);
-
+  
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentSongRef = useRef(0);
 
   const handlePlay = () => {
@@ -84,7 +83,7 @@ const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const newVolume = Number(e.target.value);
   if (audioRef.current) {
     audioRef.current.volume = newVolume;
-    setVolume(newVolume); // <-- add this
+    setVolume(newVolume);
   }
 };
 
@@ -148,7 +147,7 @@ const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     <>
       {/* audio tag */}
       <audio
-        // className="hidden"
+        className="hidden"
         ref={audioRef}
         src={songs[currentSong].src}
         controls

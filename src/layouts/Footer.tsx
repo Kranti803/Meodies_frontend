@@ -2,7 +2,7 @@ import { Facebook, Instagram, Phone, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-transparent mt-4 bottom-0 text-white py-8 flex gap-8 justify-between flex-wrap p-8 shadow-[0px_-1px_16px_#222222] w-full">
+    <footer className="bg-transparent mt-4 pb-28 bottom-0 text-white py-8 flex gap-8 justify-between flex-wrap p-8 shadow-[0px_-1px_16px_#222222] w-full">
       
       <div>
         <h2 className="text-white text-xl font-bold mb-4">About</h2>
