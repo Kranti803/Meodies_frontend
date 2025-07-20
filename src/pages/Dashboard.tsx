@@ -1,8 +1,8 @@
+// Updated AdminDashboard.tsx
 import {
   Home,
   Users,
   Music2,
-  DollarSign,
   LogOut,
   BarChart3,
 } from "lucide-react";
@@ -28,9 +28,6 @@ const AdminDashboard = () => {
             <li className="flex items-center gap-2 hover:text-[#62d962] cursor-pointer">
               <BarChart3 size={18} /> Analytics
             </li>
-            <li className="flex items-center gap-2 hover:text-[#62d962] cursor-pointer">
-              <DollarSign size={18} /> Revenue
-            </li>
           </ul>
         </div>
         <Link to={'/'} className="flex items-center gap-2 bg-[#62d962] text-black py-2 px-4 rounded-md cursor-pointer">
@@ -40,10 +37,10 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto">
-        <h1 className="text-3xl font-bold mb-6">Welcome, Admin 🎧</h1>
+        <h1 className="text-3xl font-bold mb-6">Welcome, Admin 🎷</h1>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <div className="bg-[#2a2a2a] p-5 rounded-xl shadow text-center">
             <h3 className="text-lg text-gray-400">Total Users</h3>
             <p className="text-3xl font-bold text-[#62d962]">1,024</p>
@@ -52,14 +49,13 @@ const AdminDashboard = () => {
             <h3 className="text-lg text-gray-400">Songs Uploaded</h3>
             <p className="text-3xl font-bold text-[#62d962]">6,210</p>
           </div>
-          <div className="bg-[#2a2a2a] p-5 rounded-xl shadow text-center">
-            <h3 className="text-lg text-gray-400">Monthly Revenue</h3>
-            <p className="text-3xl font-bold text-[#62d962]">$8,350</p>
-          </div>
-          <div className="bg-[#2a2a2a] p-5 rounded-xl shadow text-center">
-            <h3 className="text-lg text-gray-400">Active Subscriptions</h3>
-            <p className="text-3xl font-bold text-[#62d962]">2,345</p>
-          </div>
+          <Link
+            to="/admin/upload-song"
+            className="bg-[#2a2a2a] p-5 rounded-xl shadow text-center hover:bg-[#323232] transition-colors"
+          >
+            <h3 className="text-lg text-gray-400">Upload New Song</h3>
+            <p className="text-3xl font-bold text-[#62d962]">+</p>
+          </Link>
         </div>
 
         {/* Placeholder for future components (charts, tables, etc.) */}
