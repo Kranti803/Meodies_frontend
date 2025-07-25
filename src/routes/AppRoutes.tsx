@@ -17,6 +17,7 @@ import AllPlaylists from "../pages/Allplaylists";
 import UploadSong from "../pages/Upload";
 import GetAllUsers from "./../pages/GetAllUsers";
 import GetAllSongs from "../pages/GetAllSongs";
+import EmailVerification from "../pages/EmailVerification";
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
   {
     path: "resetpassword",
     element: <ResetPassword />,
+  },
+  {
+    path: "verify_email",
+    element: <EmailVerification />,
   },
   {
     path: "passwordsuccess",
