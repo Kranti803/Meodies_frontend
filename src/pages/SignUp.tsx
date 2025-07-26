@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRegisterUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import Spinner from "../components/Spinner";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -10,31 +11,28 @@ const Signup = () => {
     password: "",
   });
 
-  const [registerUser, { data, isLoading }] =
-    useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
 
   const navigate = useNavigate();
 
-  const handleSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      registerUser(formData).unwrap();
-
-      // toast.success(?.message);
-      console.log(data);
+      const result = await registerUser(formData).unwrap(); //mutation hooks returns promise
+      toast.success(result?.message);
       navigate("/verify_email");
-    } catch (error) {
-      toast.error((error as any)?.mesage);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#181818] text-white px-4">
-      <div className="bg-[#1f1f1f] w-full max-w-md rounded-2xl shadow-lg p-8 space-y-6">
+      <div className="bg-[#1f1f1f] max-w-md w-full rounded-2xl shadow-lg p-8 space-y-6">
         <h2 className="text-3xl font-bold text-[#62d962]">Create Account</h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
+          <div className="flex flex-col">
             <label className="block text-sm mb-1">Name</label>
             <input
               type="text"
@@ -74,9 +72,9 @@ const Signup = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#62d962] hover:bg-[#62d962] transition py-2 rounded-lg font-semibold"
+            className="w-full grid place-items-center bg-[#62d962] hover:bg-[#62d962] transition py-2 rounded-lg font-semibold"
           >
-            {isLoading ? "Loading" : "Sign Up"}
+            {isLoading ? <Spinner /> : "Sign Up"}
           </button>
         </form>
 

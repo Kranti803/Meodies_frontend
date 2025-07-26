@@ -11,9 +11,9 @@ const EmailVerification = () => {
         </p>
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/561/561127.png"
+          src="https://cdn-icons-png.flaticon.com/512/561/561127.png "
           alt="Email sent"
-          className="w-24 h-24 mx-auto mt-4"
+          className="w-24 h-24 mx-auto mt-4 filter invert"
         />
 
         <p className="text-gray-400 text-sm">

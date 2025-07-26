@@ -1,13 +1,16 @@
 import type {
   IRegisterPlayload,
-  IRegisterUserResponse,
-} from "../interfaces/userInterface";
+  IRegisterResponse,
+  ILoginResponse,
+  ILoginPayload,
+} from "../interfaces/authInterfaces";
 import { myApi } from "./myApi";
 
 export const authAPI = myApi.injectEndpoints({
   endpoints: (builder) => ({
     // Register user
-    registerUser: builder.mutation<IRegisterUserResponse, IRegisterPlayload>({//mutation<ResultType,ArgumentType>
+    registerUser: builder.mutation<IRegisterResponse, IRegisterPlayload>({
+      //mutation<ResultType,ArgumentType>
       query: (userData) => ({
         url: "/user/register",
         method: "POST",
@@ -16,13 +19,14 @@ export const authAPI = myApi.injectEndpoints({
     }),
 
     // // Login user
-    // loginUser: builder.mutation<User, LoginPayload>({
-    //   query: (credentials) => ({
-    //     url: "/auth/login",
-    //     method: "POST",
-    //     body: credentials,
-    //   }),
-    // }),
+    loginUser: builder.mutation<ILoginResponse, ILoginPayload>({
+      query: (userData) => ({
+        url: "/user/login",
+        method: "POST",
+        body: userData,
+        credentials:'include'
+      }),
+    }),
 
     // // Logout user
     // logoutUser: builder.mutation<void, void>({
@@ -31,7 +35,12 @@ export const authAPI = myApi.injectEndpoints({
     //     method: "POST",
     //   }),
     // }),
+    getProfile: builder.query({
+      query: () => ({
+        url: "/user/profile",
+      }),
+    }),
   }),
 });
 
-export const { useRegisterUserMutation } = authAPI;
+export const { useRegisterUserMutation, useGetProfileQuery, useLoginUserMutation } = authAPI;
