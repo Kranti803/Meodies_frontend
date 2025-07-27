@@ -1,5 +1,3 @@
-import { Types } from "mongoose";
-
 interface IImageUrl {
   public_id: string;
   url: string;
@@ -7,5 +5,5 @@ interface IImageUrl {
 export interface Iartist {
   name: string;
   image: IImageUrl;
-  relatedSongs?: Types.ObjectId[];
+  relatedSongs?: string[];
 }
