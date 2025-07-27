@@ -3,17 +3,17 @@ import { useLoginUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { setUser } from "../features/auth/authSlice";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "../store/hooks";
+import { Link, Navigate, useNavigate } from "react-router";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Login = () => {
-  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
+  const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -28,6 +28,10 @@ const Login = () => {
       toast.error(error?.data?.message);
     }
   };
+
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#181818] text-white px-4">
@@ -59,12 +63,12 @@ const Login = () => {
               }
             />
             <div className="text-right mt-1">
-              <a
-                href="/forgot-password"
+              <Link
+                to="/forgot-password"
                 className="text-sm text-[#62d962] hover:underline"
               >
                 Forgot password?
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -90,9 +94,9 @@ const Login = () => {
 
         <p className="text-sm text-gray-400 text-center">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-[#62d962] hover:underline">
+          <Link to="/signup" className="text-[#62d962] hover:underline">
             Sign up
-          </a>
+          </Link>
         </p>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Outlet, Navigate } from "react-router";
 
 const ProtectedRoutes = () => {
   const { user } = useAppSelector((state) => state?.auth);
-  console.log("ptotected route :", user);
+
   if (!user) return <Navigate to="/login" replace />;
   return <Outlet />;
 };

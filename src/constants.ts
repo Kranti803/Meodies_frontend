@@ -4,12 +4,10 @@ import {
   User,
   Album,
   Clock,
-  Settings,
   Heart,
   Repeat,
   ListMusic,
   ListPlus,
-  LogOut,
 } from "lucide-react";
 
 export const sideBarItems = [
@@ -64,17 +62,5 @@ export const sideBarItems = [
       },
     ],
   },
-  {
-    title: "General",
-    items: [
-      {
-        icon: Settings,
-        name: "Settings",
-      },
-      {
-        icon: LogOut,
-        name: "Logout",
-      },
-    ],
-  },
+  
 ];

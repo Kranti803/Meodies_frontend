@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useRegisterUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import Spinner from "../components/Spinner";
+import { useAppSelector } from "../store/hooks";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ const Signup = () => {
   });
 
   const [registerUser, { isLoading }] = useRegisterUserMutation();
-
+  const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,6 +26,10 @@ const Signup = () => {
       toast.error(error?.data?.message);
     }
   };
+
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#181818] text-white px-4">
@@ -91,9 +96,9 @@ const Signup = () => {
 
         <p className="text-sm text-gray-400 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-[#62d962] hover:underline">
+          <Link to="/login" className="text-[#62d962] hover:underline">
             Log in
-          </a>
+          </Link>
         </p>
       </div>
     </div>
