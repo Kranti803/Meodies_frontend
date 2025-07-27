@@ -35,9 +35,10 @@ export const authAPI = myApi.injectEndpoints({
     //     method: "POST",
     //   }),
     // }),
-    getProfile: builder.query({
+    getProfile: builder.query<ILoginResponse,void>({
       query: () => ({
         url: "/user/profile",
+        credentials:'include'
       }),
     }),
   }),

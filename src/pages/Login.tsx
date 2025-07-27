@@ -2,18 +2,19 @@ import { useState } from "react";
 import { useLoginUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { useDispatch } from "react-redux";
 import { setUser } from "../features/auth/authSlice";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../store/hooks";
 
 const Login = () => {
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

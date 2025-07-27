@@ -18,6 +18,8 @@ import UploadSong from "../pages/Upload";
 import GetAllUsers from "./../pages/GetAllUsers";
 import GetAllSongs from "../pages/GetAllSongs";
 import EmailVerification from "../pages/EmailVerification";
+import RoleBasedRoutes from "./RoleBasedRoutes";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -25,77 +27,89 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "",
-        element: <Home />,
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            path: "",
+            element: <Home />,
+          },
+          {
+            path: "about",
+            element: <About />,
+          },
+          {
+            path: "contact",
+            element: <Contact />,
+          },
+          {
+            path: "premium",
+            element: <Premium />,
+          },
+          {
+            path: "createplaylist",
+            element: <CreatePlaylist />,
+          },
+          {
+            path: "allplaylists",
+            element: <AllPlaylists />,
+          },
+          {
+            path: "playlist",
+            element: <Playlist />,
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    path: "/admin",
+    element: <RoleBasedRoutes />,
+    children: [
+      {
+        path: "dashboard",
+        element: <AdminDashboard />,
       },
       {
-        path: "about",
-        element: <About />,
+        path: "upload",
+        element: <UploadSong />,
       },
       {
-        path: "contact",
-        element: <Contact />,
+        path: "songs",
+        element: <GetAllSongs />,
       },
       {
-        path: "premium",
-        element: <Premium />,
-      },
-      {
-        path: "createplaylist",
-        element: <CreatePlaylist />,
-      },
-      {
-        path: "allplaylists",
-        element: <AllPlaylists />,
-      },
-      {
-        path: "playlist",
-        element: <Playlist />,
+        path: "users",
+        element: <GetAllUsers />,
       },
     ],
   },
   {
-    path: "login",
+    path: "/login",
     element: <Login />,
   },
   {
-    path: "signup",
+    path: "/signup",
     element: <SignUp />,
   },
   {
-    path: "forgotpassword",
+    path: "/forgotpassword",
     element: <ForgotPassword />,
   },
   {
-    path: "resetpassword",
+    path: "/resetpassword",
     element: <ResetPassword />,
   },
   {
-    path: "verify_email",
+    path: "/verify_email",
     element: <EmailVerification />,
   },
   {
-    path: "passwordsuccess",
+    path: "/passwordsuccess",
     element: <PasswordSuccess />,
   },
   {
     path: "/splash",
     element: <SplashScreen />,
-  },
-  {
-    path: "/admindashboard",
-    element: <AdminDashboard />,
-  },
-  {
-    path: "/admin/upload",
-    element: <UploadSong />,
-  },
-  {
-    path: "/admin/songs",
-    element: <GetAllSongs />,
-  },
-  {
-    path: "/admin/users",
-    element: <GetAllUsers />,
   },
 ]);
