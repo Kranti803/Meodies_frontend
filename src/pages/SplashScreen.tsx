@@ -22,10 +22,10 @@ const SplashScreen = () => {
       <div className="relative z-10 text-center space-y-8 px-6">
         {/* Logo/Brand */}
         <div className="space-y-4">
-          <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center animate-pulse">
+          <div className="w-24 h-24 mx-auto rounded-full bg-[#62d962] flex items-center justify-center animate-pulse">
             <Music className="h-12 w-12 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold bg-[#62d962] bg-clip-text text-transparent">
             Melodies
           </h1>
         </div>
@@ -36,7 +36,7 @@ const SplashScreen = () => {
             Loading your music experience...
           </p>
           <span className="flex justify-center items-center pt-4">
-            <Loader className="animate-spin w-8 h-8 text-blue-500" />
+            <Loader className="animate-spin w-8 h-8 text-[#62d962]" />
           </span>
         </div>
       </div>

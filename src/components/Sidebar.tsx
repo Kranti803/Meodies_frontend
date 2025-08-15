@@ -1,4 +1,4 @@
-import { LogOut, Settings, X } from "lucide-react";
+import { LogOut, Settings, X, LayoutDashboard } from "lucide-react";
 import { sideBarItems } from "../constants";
 import { useSidebar } from "../context/sideBarContext";
 import AuthButtons from "./AuthButtons";
@@ -27,7 +27,7 @@ const Sidebar = () => {
     }
   };
   return (
-    <div className="h-full md:pb-32 bg-[#181818] text-white lg:border-r-2 lg:border-[#62d962] lg:drop-shadow-[1px_0_8px_#62d962] flex flex-col gap-6 p-8 justify-left overflow-y-auto scrollbar-hide">
+    <div className="h-full pb-32 bg-[#181818] text-white lg:border-r-2 lg:border-[#62d962] lg:drop-shadow-[1px_0_8px_#62d962] flex flex-col gap-6 p-8 justify-left overflow-y-auto scrollbar-hide">
       <div className="flex justify-between">
         <h1 className="text-3xl font-bold text-[#62d962]">Melodies</h1>
         <button
@@ -66,6 +66,14 @@ const Sidebar = () => {
           <button className="flex items-center text-sm gap-x-2 py-2 cursor-pointer">
             <Settings size={16} /> Settings
           </button>
+          {user && user.role === "admin" && (
+            <Link
+              to={"/admin/dashboard"}
+              className="flex items-center text-sm gap-x-2 py-2 cursor-pointer"
+            >
+              <LayoutDashboard size={16} /> Dashboard
+            </Link>
+          )}
 
           <button
             className="flex items-center text-sm gap-x-2 py-2 cursor-pointer"

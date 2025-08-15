@@ -2,8 +2,11 @@ import { Menu, Search } from "lucide-react";
 import { useSidebar } from "../context/sideBarContext";
 import AuthButtons from "./AuthButtons";
 import NavLinks from "./NavLinks";
+import { useAppSelector } from "../store/hooks";
+import UserProfile from "./UserProfile";
 const Navbar = () => {
   const { toggleSidebar } = useSidebar();
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <section className=" h-18 px-1 sm:px-4 flex justify-between items-center ">
       <button
@@ -26,7 +29,11 @@ const Navbar = () => {
         </div>
       </div>
       <NavLinks className="hidden lg:flex lg:gap-x-8" />
-      <AuthButtons className="md:flex gap-x-4 hidden" />
+      {!user ? (
+        <AuthButtons className="md:flex gap-x-4 hidden" />
+      ) : (
+        <UserProfile name={user?.name} />
+      )}
     </section>
   );
 };
