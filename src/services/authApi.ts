@@ -26,10 +26,20 @@ export const authAPI = myApi.injectEndpoints({
       }),
     }),
 
-    logoutUser: builder.query<{ success: boolean; message: string }, void>({
+    logoutUser: builder.mutation<{ success: boolean; message: string }, void>({
       query: () => ({
         url: "/user/logout",
+        method: "POST",
         credentials: "include",
+      }),
+    }),
+
+    resendEmailVerificationLink: builder.mutation<{ success: boolean; message: string }, {email:string}>({
+      query: (userEmail) => ({
+        url: "/user/resend_email_verification_link",
+        method: "POST",
+        credentials: "include",
+        body:userEmail
       }),
     }),
     getProfile: builder.query<ILoginResponse, void>({
@@ -45,5 +55,6 @@ export const {
   useRegisterUserMutation,
   useGetProfileQuery,
   useLoginUserMutation,
-  useLazyLogoutUserQuery,
+  useLogoutUserMutation,
+  useResendEmailVerificationLinkMutation
 } = authAPI;

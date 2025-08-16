@@ -1,5 +1,32 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useResendEmailVerificationLinkMutation } from "../services/authApi";
+import { toast } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { removeTempUserEmail } from "../features/auth/authSlice";
+import { useEffect } from "react";
+
 const EmailVerification = () => {
+  const [resendEmailVerificationLink, { isLoading }] =
+    useResendEmailVerificationLinkMutation();
+  const { tempUserEmail, user } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const handleResendVerification = async () => {
+    try {
+      if (!tempUserEmail)
+        return toast.error("No email found to resend verification.");
+      const result = await resendEmailVerificationLink({
+        email: tempUserEmail,
+      }).unwrap();
+      toast.success(result?.message);
+      dispatch(removeTempUserEmail());
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
+  };
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user]);
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#181818] text-white px-4">
       <div className="bg-[#1f1f1f] w-full max-w-md rounded-2xl shadow-lg p-8 space-y-6 text-center">
@@ -7,7 +34,8 @@ const EmailVerification = () => {
         <p className="text-gray-300">
           We have sent a verification link to your email address.
           <br />
-          Please check your inbox and verify your email to continue using your account.
+          Please check your inbox and verify your email to continue using your
+          account.
         </p>
 
         <img
@@ -18,7 +46,11 @@ const EmailVerification = () => {
 
         <p className="text-gray-400 text-sm">
           Didn’t receive the email? Check your spam folder or{" "}
-          <button className="text-[#62d962] hover:underline">
+          <button
+            onClick={handleResendVerification}
+            className="text-[#62d962] hover:underline"
+            disabled={isLoading}
+          >
             Resend Verification
           </button>
         </p>

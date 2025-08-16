@@ -5,14 +5,14 @@ import AuthButtons from "./AuthButtons";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { useLazyLogoutUserQuery } from "../services/authApi";
+import {  useLogoutUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
 import { removeUser } from "../features/auth/authSlice";
 
 const Sidebar = () => {
   const { closeSidebar } = useSidebar();
   const { user } = useAppSelector((state) => state.auth);
-  const [logoutUser] = useLazyLogoutUserQuery();
+  const [logoutUser] = useLogoutUserMutation();
   const dispatch = useAppDispatch();
 
   const handleLogout = async () => {

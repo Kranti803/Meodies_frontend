@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLoginUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { setUser } from "../features/auth/authSlice";
+import { setTempUserEmail, setUser } from "../features/auth/authSlice";
 import { Link, Navigate, useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
@@ -26,7 +26,13 @@ const Login = () => {
       navigate("/");
     } catch (error: any) {
       toast.error(error?.data?.message);
+      dispatch(setTempUserEmail(formData.email));
+      if (error.status === 403) navigate("/verify_email");
     }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:4500/auth/google";
   };
 
   if (user) {
@@ -83,7 +89,10 @@ const Login = () => {
 
         <div className="text-center text-gray-500">or</div>
 
-        <button className="w-full flex items-center justify-center gap-2 border border-gray-600 hover:bg-[#2c2c2c] transition py-2 rounded-lg">
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-2 border border-gray-600 hover:bg-[#2c2c2c] transition py-2 rounded-lg"
+        >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"
