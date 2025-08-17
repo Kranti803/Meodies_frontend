@@ -3,6 +3,7 @@ import type {
   IRegisterResponse,
   ILoginResponse,
   ILoginPayload,
+  IResetPasswordPayload,
 } from "../interfaces/authInterfaces";
 import { myApi } from "./myApi";
 
@@ -34,18 +35,45 @@ export const authAPI = myApi.injectEndpoints({
       }),
     }),
 
-    resendEmailVerificationLink: builder.mutation<{ success: boolean; message: string }, {email:string}>({
+    resendEmailVerificationLink: builder.mutation<
+      { success: boolean; message: string },
+      { email: string }
+    >({
       query: (userEmail) => ({
         url: "/user/resend_email_verification_link",
         method: "POST",
         credentials: "include",
-        body:userEmail
+        body: userEmail,
       }),
     }),
     getProfile: builder.query<ILoginResponse, void>({
       query: () => ({
         url: "/user/profile",
         credentials: "include",
+      }),
+    }),
+    forgotPassword: builder.mutation<
+      { success: boolean; message: string },
+      { email: string }
+    >({
+      query: (email) => ({
+        url: "/user/forgot_password",
+        method: "POST",
+        body: email,
+      }),
+    }),
+
+    resetPassword: builder.mutation<
+      { success: boolean; message: string },
+      IResetPasswordPayload
+    >({
+      query: ({ resetToken, newPassword }) => ({
+        url: `/user/reset_password/${resetToken}`,
+        method: "POST",
+        body: { newPassword },
+        headers: {
+          "Content-Type": "application/json", // setting JSON header
+        },
       }),
     }),
   }),
@@ -56,5 +84,7 @@ export const {
   useGetProfileQuery,
   useLoginUserMutation,
   useLogoutUserMutation,
-  useResendEmailVerificationLinkMutation
+  useResendEmailVerificationLinkMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = authAPI;

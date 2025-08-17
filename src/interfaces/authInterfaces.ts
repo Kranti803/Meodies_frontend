@@ -22,6 +22,10 @@ export interface ILoginPayload {
   email: string;
   password: string;
 }
+export interface IResetPasswordPayload {
+  resetToken: string;
+  newPassword: string;
+}
 //responses
 export interface IRegisterResponse {
   success: boolean;
