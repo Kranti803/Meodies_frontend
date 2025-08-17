@@ -17,6 +17,7 @@ import ratanLambiyan from "../assets/Raataan Lambiyan - Shershaah Sidharth – K
 import saathiyaa from "../assets/Shreya Ghoshal - Saathiyaa (From  Singham ).mp3";
 
 import { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "../store/hooks";
 
 //songs array
 const songs = [
@@ -55,9 +56,10 @@ const MusicPlayer = () => {
   const [currentSongDuration, setCurrentSongDuration] = useState(0);
   const [currentSongTotalDuration, setCurrentSongTotalDuration] = useState(0);
   const [volume, setVolume] = useState(1);
-  
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentSongRef = useRef(0);
+  const { songs } = useAppSelector((state) => state.song);
 
   const handlePlay = () => {
     if (!isPlaying) {
@@ -79,14 +81,13 @@ const MusicPlayer = () => {
     }
   };
 
-const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const newVolume = Number(e.target.value);
-  if (audioRef.current) {
-    audioRef.current.volume = newVolume;
-    setVolume(newVolume);
-  }
-};
-
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = Number(e.target.value);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+      setVolume(newVolume);
+    }
+  };
 
   const handleNext = () => {
     if (currentSongRef.current < songs.length - 1) {
@@ -149,7 +150,7 @@ const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       <audio
         className="hidden"
         ref={audioRef}
-        src={songs[currentSong].src}
+        src={songs[currentSong].songUrl?.url}
         controls
         controlsList="nodownload"
         loop={isRepeat}
@@ -164,13 +165,13 @@ const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         {/* Song Info */}
         <div className="hidden sm:flex items-center gap-3 w-1/3 ">
           <img
-            src={song1}
+            src={songs[currentSong]?.image?.url}
             alt="Cover"
             className="w-12 h-12 object-cover rounded-md md:block hidden"
           />
           <div>
             <h4 className="text-sm font-semibold truncate">
-              {songs[currentSong].name}
+              {songs[currentSong].title}
             </h4>
             <p className="text-xs text-gray-400">The Neighbourhood</p>
           </div>
@@ -247,7 +248,11 @@ const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             className="border-none outline-none cursor-pointer"
             onClick={() => setIsMute(!isMute)}
           >
-            {(isMute===true || volume===0)? <VolumeX size={18} /> : <Volume2 size={18} />}
+            {isMute === true || volume === 0 ? (
+              <VolumeX size={18} />
+            ) : (
+              <Volume2 size={18} />
+            )}
           </button>
           <input
             type="range"

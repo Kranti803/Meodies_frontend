@@ -1,4 +1,4 @@
-import { LogOut, Settings, X, LayoutDashboard } from "lucide-react";
+import { LogOut, X, LayoutDashboard } from "lucide-react";
 import { sideBarItems } from "../constants";
 import { useSidebar } from "../context/sideBarContext";
 import AuthButtons from "./AuthButtons";
@@ -46,7 +46,7 @@ const Sidebar = () => {
               const Icon = item.icon;
               return (
                 <Link
-                  to="/"
+                  to={item?.link}
                   key={index}
                   className={`flex items-center gap-x-2 w-4/5 text-sm py-2 ${
                     item.name.includes("Home") && "bg-[#62d962]"
@@ -63,9 +63,7 @@ const Sidebar = () => {
       <div className="flex flex-col">
         <p className="text-sm text-[#62d962]">General</p>
         <aside className="flex flex-col py-2 gap-y-2">
-          <button className="flex items-center text-sm gap-x-2 py-2 cursor-pointer">
-            <Settings size={16} /> Settings
-          </button>
+          
           {user && user.role === "admin" && (
             <Link
               to={"/admin/dashboard"}

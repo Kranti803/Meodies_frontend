@@ -20,6 +20,7 @@ import GetAllSongs from "../pages/GetAllSongs";
 import EmailVerification from "../pages/EmailVerification";
 import RoleBasedRoutes from "./RoleBasedRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Discover from "../pages/Discover";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
           {
             path: "playlist",
             element: <Playlist />,
+          },
+          {
+            path: "discover",
+            element: <Discover />,
           },
         ],
       },

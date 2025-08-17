@@ -2,7 +2,6 @@ import {
   Home,
   Compass,
   User,
-  Album,
   Clock,
   Heart,
   Repeat,
@@ -17,18 +16,18 @@ export const sideBarItems = [
       {
         icon: Home,
         name: "Home",
+        link:'/'
       },
       {
         icon: Compass,
         name: "Discover",
+          link:'/discover'
       },
-      {
-        icon: Album,
-        name: "Discover",
-      },
+
       {
         icon: User,
         name: "Artists",
+          link:'/'
       },
     ],
   },
@@ -38,10 +37,12 @@ export const sideBarItems = [
       {
         icon: Clock,
         name: "Recently Added",
+          link:'/'
       },
       {
         icon: Repeat,
         name: "Most Played",
+          link:'/'
       },
     ],
   },
@@ -51,16 +52,18 @@ export const sideBarItems = [
       {
         icon: ListMusic,
         name: "Playlists",
+          link:'/'
       },
       {
         icon: Heart,
         name: "Favourites",
+          link:'/'
       },
       {
         icon: ListPlus,
         name: "Add Playlist",
+          link:'/'
       },
     ],
   },
-  
 ];
