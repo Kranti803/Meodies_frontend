@@ -8,58 +8,27 @@ import {
   Play,
   VolumeX,
 } from "lucide-react";
-import song1 from "../assets/song1.png";
-import dhinkachika from "../assets/Amrita Kak - Dhinka Chika (From  Ready ).mp3";
-import savanAayaHai from "../assets/Arijit Singh - Sawan Aaya Hai (From  Creature 3D ).mp3";
-import mainAgarKahoon from "../assets/Main Agar Kahoon Om Shanti Om Shahrukh Khan,Deepika Padukone Sonu Nigam,Shreya Ghosal.mp3";
-import jaadoKiJhappi from "../assets/Mika Singh - Jadoo Ki Jhappi.mp3";
-import ratanLambiyan from "../assets/Raataan Lambiyan - Shershaah Sidharth – Kiara Tanishk B. Jubin Asees.mp3";
-import saathiyaa from "../assets/Shreya Ghoshal - Saathiyaa (From  Singham ).mp3";
-
 import { useEffect, useRef, useState } from "react";
+import { useGetAllSongsQuery } from "../services/songApi";
 import { useAppSelector } from "../store/hooks";
 
-//songs array
-const songs = [
-  {
-    name: "Dhinka Chika",
-    src: dhinkachika,
-  },
-  {
-    name: "Savan Aaya Hai",
-    src: savanAayaHai,
-  },
-  {
-    name: "Main Agar Kahoon",
-    src: mainAgarKahoon,
-  },
-  {
-    name: "Jaado Ki Jhappi",
-    src: jaadoKiJhappi,
-  },
-  {
-    name: "Ratan Lambiyan",
-    src: ratanLambiyan,
-  },
-  {
-    name: "Saathiyaa",
-    src: saathiyaa,
-  },
-];
-
 const MusicPlayer = () => {
+  const { currentSongPlayingIndex } = useAppSelector((state) => state.song);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
   const [isMute, setIsMute] = useState(false);
   const [autoPlay, setAutoplay] = useState(false);
-  const [currentSong, setCurrentSong] = useState(0);
+  const [currentSong, setCurrentSong] = useState(currentSongPlayingIndex);
   const [currentSongDuration, setCurrentSongDuration] = useState(0);
   const [currentSongTotalDuration, setCurrentSongTotalDuration] = useState(0);
   const [volume, setVolume] = useState(1);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentSongRef = useRef(0);
-  const { songs } = useAppSelector((state) => state.song);
+  const { data } = useGetAllSongsQuery();
+  const songs = data?.songs || [];
+
 
   const handlePlay = () => {
     if (!isPlaying) {
@@ -144,13 +113,19 @@ const MusicPlayer = () => {
     return () => audio.removeEventListener("ended", handleSongEnded);
   }, []);
 
+  useEffect(() => {
+    setCurrentSong(currentSongPlayingIndex);
+    setAutoplay(true);
+    setIsPlaying(true)
+  }, [currentSongPlayingIndex]);
+
   return (
     <>
       {/* audio tag */}
       <audio
         className="hidden"
         ref={audioRef}
-        src={songs[currentSong].songUrl?.url}
+        src={songs[currentSong]?.songUrl?.url}
         controls
         controlsList="nodownload"
         loop={isRepeat}
@@ -171,7 +146,7 @@ const MusicPlayer = () => {
           />
           <div>
             <h4 className="text-sm font-semibold truncate">
-              {songs[currentSong].title}
+              {songs[currentSong]?.title}
             </h4>
             <p className="text-xs text-gray-400">The Neighbourhood</p>
           </div>

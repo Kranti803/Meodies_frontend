@@ -1,16 +1,13 @@
 import Banner from "./Banner"
-import MusicPlayer from "./Player"
 import Songs from "./Songs"
-import WeeklyTopSongs from "./WeeklyTopSongs"
+import TopPlayedSongs from "./WeeklyTopSongs"
 
 const Main = () => {
   return (
     <section className='min-h-screen pt-2 md:py-4'>
         <Banner/>
-        <WeeklyTopSongs/>
-        <WeeklyTopSongs/>
+        <TopPlayedSongs/>
         <Songs/>
-        <MusicPlayer/>
     </section>
   )
 }

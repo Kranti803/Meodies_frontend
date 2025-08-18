@@ -3,9 +3,9 @@ import { sideBarItems } from "../constants";
 import { useSidebar } from "../context/sideBarContext";
 import AuthButtons from "./AuthButtons";
 import NavLinks from "./NavLinks";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import {  useLogoutUserMutation } from "../services/authApi";
+import { useLogoutUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
 import { removeUser } from "../features/auth/authSlice";
 
@@ -45,15 +45,17 @@ const Sidebar = () => {
             {section.items.map((item, index) => {
               const Icon = item.icon;
               return (
-                <Link
+                <NavLink
                   to={item?.link}
                   key={index}
-                  className={`flex items-center gap-x-2 w-4/5 text-sm py-2 ${
-                    item.name.includes("Home") && "bg-[#62d962]"
-                  }  py-1 px-2 rounded-[8px] cursor-pointer`}
+                  className={({ isActive }) =>
+                    `flex items-center gap-x-2 w-4/5 text-sm py-2 ${
+                      isActive && "bg-[#62d962]"
+                    }  py-1 px-2 rounded-[8px] cursor-pointer hover:bg-[#62d962]`
+                  }
                 >
                   <Icon size={16} /> {item.name}
-                </Link>
+                </NavLink>
               );
             })}
           </div>
@@ -63,18 +65,17 @@ const Sidebar = () => {
       <div className="flex flex-col">
         <p className="text-sm text-[#62d962]">General</p>
         <aside className="flex flex-col py-2 gap-y-2">
-          
           {user && user.role === "admin" && (
             <Link
               to={"/admin/dashboard"}
-              className="flex items-center text-sm gap-x-2 py-2 cursor-pointer"
+              className="flex items-center text-sm gap-x-2 cursor-pointer rounded-[8px] px-2 py-2 hover:bg-[#62d962]"
             >
               <LayoutDashboard size={16} /> Dashboard
             </Link>
           )}
 
           <button
-            className="flex items-center text-sm gap-x-2 py-2 cursor-pointer"
+            className="flex items-center text-sm gap-x-2 cursor-pointer rounded-[8px] px-2 py-2 hover:bg-[#62d962]"
             onClick={handleLogout}
           >
             <LogOut size={16} /> Logout

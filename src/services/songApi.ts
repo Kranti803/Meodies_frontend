@@ -1,6 +1,7 @@
 import { setAllSongs } from "../features/songs/songSlice";
 import { myApi } from "./myApi";
 import { type Isong } from "../interfaces/songInterface";
+import type { Iartist } from "../interfaces/artistsInterface";
 
 export const songApi = myApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +9,8 @@ export const songApi = myApi.injectEndpoints({
       query: () => ({
         url: "/song/all",
       }),
-      async onQueryStarted(_, { dispatch, queryFulfilled }) { //first param is arg
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        //first param is arg
         try {
           const { data } = await queryFulfilled;
           if (data.success) {
@@ -19,7 +21,17 @@ export const songApi = myApi.injectEndpoints({
         }
       },
     }),
+    getAllArtists: builder.query<{ success: true; artists: Iartist[] }, void>({
+      query: () => ({
+        url: "/artist/all",
+      }),
+    }),
+    getArtistSong: builder.query<{ success: true; songs: Isong[] }, string>({
+      query: (artistId) => ({
+        url: `/artist/${artistId}/songs`,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllSongsQuery } = songApi;
+export const { useGetAllSongsQuery, useGetAllArtistsQuery, useGetArtistSongQuery } = songApi;

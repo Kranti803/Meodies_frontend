@@ -3,9 +3,11 @@ import type { Isong } from "../../interfaces/songInterface";
 
 interface SongsInterface {
   songs: Isong[];
+  currentSongPlayingIndex: number | 0;
 }
 const initialState: SongsInterface = {
   songs: [],
+  currentSongPlayingIndex: 0,
 };
 
 const songSlice = createSlice({
@@ -15,8 +17,11 @@ const songSlice = createSlice({
     setAllSongs: (state, action: PayloadAction<Isong[]>) => {
       state.songs = action.payload;
     },
+    setcurrentSongPlayingIndex: (state, action: PayloadAction<number>) => {
+      state.currentSongPlayingIndex = action.payload;
+    },
   },
 });
 
-export const { setAllSongs } = songSlice.actions;
+export const { setAllSongs,setcurrentSongPlayingIndex } = songSlice.actions;
 export default songSlice.reducer;

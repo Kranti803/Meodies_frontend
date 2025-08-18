@@ -27,7 +27,7 @@ export const sideBarItems = [
       {
         icon: User,
         name: "Artists",
-          link:'/'
+          link:'/artists'
       },
     ],
   },
@@ -37,12 +37,12 @@ export const sideBarItems = [
       {
         icon: Clock,
         name: "Recently Added",
-          link:'/'
+          link:'/recently_played'
       },
       {
         icon: Repeat,
         name: "Most Played",
-          link:'/'
+          link:'/most_played'
       },
     ],
   },
@@ -52,17 +52,17 @@ export const sideBarItems = [
       {
         icon: ListMusic,
         name: "Playlists",
-          link:'/'
+          link:'/playlists'
       },
       {
         icon: Heart,
         name: "Favourites",
-          link:'/'
+          link:'/favourites'
       },
       {
         icon: ListPlus,
         name: "Add Playlist",
-          link:'/'
+          link:'/add_playlist'
       },
     ],
   },

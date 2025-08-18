@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import Sidebar from "../components/Sidebar";
 import "../index.css";
 import { useSidebar } from "../context/sideBarContext";
+import MusicPlayer from "../components/Player";
 
 const MainLayout = () => {
   const { isOpen } = useSidebar();
@@ -22,6 +23,7 @@ const MainLayout = () => {
       {/* Main Content: Scrollable */}
       <aside className="ml-0 w-full h-screen overflow-y-scroll scrollbar-hide p-4">
         <Outlet />
+        <MusicPlayer/>
       </aside>
     </main>
   );

@@ -21,6 +21,8 @@ import EmailVerification from "../pages/EmailVerification";
 import RoleBasedRoutes from "./RoleBasedRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Discover from "../pages/Discover";
+import AllArtists from "../pages/AllArtists";
+import ArtistSongs from "../pages/ArtistSongs";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +63,14 @@ export const router = createBrowserRouter([
           {
             path: "discover",
             element: <Discover />,
+          },
+          {
+            path: "artists",
+            element: <AllArtists />,
+          },
+          {
+            path: "artist/:artistName/:artistId",
+            element: <ArtistSongs />,
           },
         ],
       },
