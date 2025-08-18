@@ -136,16 +136,16 @@ const MusicPlayer = () => {
           handleSongTotalDuration();
         }}
       />
-      <div className="h-28 fixed bottom-0 left-0 right-0 bg-[#1f1f1f] text-white shadow-lg px-4 py-3 flex items-center justify-center sm:justify-between z-50">
+      <div className="h-28 fixed bottom-0 left-0 right-0 bg-bgDark text-white shadow-lg px-4 py-3 flex items-center justify-center sm:justify-between z-50">
         {/* Song Info */}
-        <div className="hidden sm:flex items-center gap-3 w-1/3 ">
+        <div className="hidden sm:flex items-center gap-3 w-1/3">
           <img
             src={songs[currentSong]?.image?.url}
             alt="Cover"
             className="w-12 h-12 object-cover rounded-md md:block hidden"
           />
-          <div>
-            <h4 className="text-sm font-semibold truncate">
+          <div className="w-[calc(100%-48px)]">
+            <h4 className="text-sm font-semibold">
               {songs[currentSong]?.title}
             </h4>
             <p className="text-xs text-gray-400">The Neighbourhood</p>
@@ -156,27 +156,27 @@ const MusicPlayer = () => {
         <div className="flex flex-col items-center gap-1 w-1/3">
           <div className="flex items-center gap-8 sm:gap-4">
             {/* Shuffle */}
-            <button className=" hover:text-[#62d962] cursor-pointer border-none outline-none">
+            <button className=" hover:text-primary cursor-pointer border-none outline-none">
               <Shuffle size={18} />
             </button>
 
             <button
               onClick={handlePrev}
-              className="hover:text-[#62d962] cursor-pointer border-none outline-none"
+              className="hover:text-primary cursor-pointer border-none outline-none"
             >
               <SkipBack size={20} />
             </button>
 
             <button
               onClick={handlePlay}
-              className="bg-[#62d962] text-white p-2 rounded-full hover:scale-105 transition cursor-pointer border-none outline-none"
+              className="bg-primary text-white p-2 rounded-full transition cursor-pointer border-none outline-none"
             >
               {isPlaying ? <Pause size={20} /> : <Play size={20} />}
             </button>
 
             <button
               onClick={handleNext}
-              className="hover:text-[#62d962] cursor-pointer border-none outline-none"
+              className="hover:text-primary cursor-pointer border-none outline-none"
             >
               <SkipForward size={20} />
             </button>
@@ -184,10 +184,10 @@ const MusicPlayer = () => {
             {/* Repeat */}
             <button
               onClick={() => setIsRepeat(!isRepeat)}
-              className="hover:text-[#62d962] cursor-pointer border-none outline-none"
+              className="hover:text-primary cursor-pointer border-none outline-none"
             >
               {isRepeat ? (
-                <Repeat size={18} className="text-[#62d962]" />
+                <Repeat size={18} className="text-primary" />
               ) : (
                 <Repeat size={18} />
               )}
@@ -207,7 +207,7 @@ const MusicPlayer = () => {
               max={currentSongTotalDuration}
               value={currentSongDuration}
               onChange={(e) => handleSeekTime(e)}
-              className="w-5xl h-1 accent-[#62d962] cursor-pointer"
+              className="w-5xl h-1 accent-primary cursor-pointer"
             />
             <span>
               {new Date(currentSongTotalDuration * 1000)
@@ -236,7 +236,7 @@ const MusicPlayer = () => {
             step="0.01"
             value={volume}
             onChange={(e) => handleVolumeChange(e)}
-            className="w-24 h-1 accent-[#62d962] cursor-pointer"
+            className="w-24 h-1 accent-primary cursor-pointer"
           />
         </div>
       </div>
