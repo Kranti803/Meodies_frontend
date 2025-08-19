@@ -9,7 +9,7 @@ const SongCard = ({ song, idx }: { song: Isong; idx: number }) => {
   return (
     <div
       onClick={() => dispatch(setcurrentSongPlayingIndex(idx))}
-      className="font-primary grid grid-cols-[1fr_1fr_auto] gap-x-2 py-4 px-2 my-2 hover:bg-[#2a2a2a] rounded-lg transition cursor-pointer"
+      className="font-primary grid grid-cols-[1fr_1fr_auto] gap-x-2 py-4 px-2 my-2 hover:bg-bgDark rounded-lg transition cursor-pointer"
     >
       
       <div className="flex items-center gap-3">

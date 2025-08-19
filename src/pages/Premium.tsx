@@ -4,9 +4,9 @@ const Premium = () => {
   return (
     <>
       <Navbar />
-      <div className="max-h-screen bg-[#181818] text-white px-1 lg:px-6 py-12 flex items-center justify-center">
-        <div className="max-w-4xl bg-[#1f1f1f] p-10 rounded-2xl shadow-lg space-y-8 text-center">
-          <h1 className="text-4xl font-bold text-[#62d962]">Go Premium</h1>
+      <div className="max-h-screen bg-inherit text-white px-1 lg:px-6 py-12 flex items-center justify-center">
+        <div className="max-w-4xl bg-bgDark p-10 rounded-2xl shadow-lg space-y-8 text-center">
+          <h1 className="text-4xl font-bold text-primary">Go Premium</h1>
           <p className="text-gray-300 text-lg">
             Unlock the full potential of your music experience with our upcoming Premium plan.
           </p>
@@ -17,7 +17,7 @@ const Premium = () => {
 
           <button
             disabled
-            className="mt-4 px-6 py-3 bg-[#62d962] text-black rounded-lg cursor-not-allowed opacity-70"
+            className="mt-4 px-6 py-3 bg-primary text-white rounded-lg cursor-not-allowed opacity-70"
           >
             Coming Soon
           </button>

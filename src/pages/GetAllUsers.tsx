@@ -13,7 +13,7 @@ const initialUsers: User[] = [
   { _id: "3", name: "Charlie", email: "charlie@example.com", role: "user" },
 ];
 
-const UsersPage = () => {
+const GetAllUsers = () => {
   const [users, setUsers] = useState<User[]>(initialUsers);
 
   const deleteUser = (id: string) => {
@@ -93,4 +93,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default GetAllUsers;

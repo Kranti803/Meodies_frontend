@@ -12,7 +12,7 @@ const AllArtists = () => {
           {data?.artists?.map((artist, idx) => (
             <Link to ={`/artist/${artist?.name}/${artist?._id}`}
               key={idx}
-              className="bg-[#242424] rounded-lg p-4 flex flex-col items-center hover:bg-[#2a2a2a] transition"
+              className="bg-bgDark rounded-lg p-4 flex flex-col items-center"
             >
               <img
                 src={artist?.image?.url}
@@ -22,7 +22,7 @@ const AllArtists = () => {
               <h3 className="text-sm font-semibold text-center">
                 {artist?.name}
               </h3>
-              <button className="mt-3 bg-[#62d962] text-white rounded-full p-2 hover:scale-105 transition">
+              <button className="mt-3 bg-primary text-white rounded-full p-2 cursor-pointer hover:scale-105 transition">
                 <Play size={16} />
               </button>
             </Link>

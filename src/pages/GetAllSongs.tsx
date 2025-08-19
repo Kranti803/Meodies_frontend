@@ -14,7 +14,7 @@ const initialSongs: Song[] = [
   { _id: "3", title: "Shape of You", artist: "Ed Sheeran", genre: "Pop" },
 ];
 
-const SongsPage = () => {
+const GetAllSongs = () => {
   const [songs, setSongs] = useState<Song[]>(initialSongs);
 
   const deleteSong = (id: string) => {
@@ -88,4 +88,4 @@ const SongsPage = () => {
   );
 };
 
-export default SongsPage;
+export default GetAllSongs;

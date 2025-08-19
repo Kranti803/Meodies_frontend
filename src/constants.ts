@@ -7,6 +7,8 @@ import {
   Repeat,
   ListMusic,
   ListPlus,
+  Music2,
+  BarChart3,
 } from "lucide-react";
 
 export const sideBarItems = [
@@ -16,18 +18,18 @@ export const sideBarItems = [
       {
         icon: Home,
         name: "Home",
-        link:'/'
+        link: "/",
       },
       {
         icon: Compass,
         name: "Discover",
-          link:'/discover'
+        link: "/discover",
       },
 
       {
         icon: User,
         name: "Artists",
-          link:'/artists'
+        link: "/artists",
       },
     ],
   },
@@ -37,12 +39,12 @@ export const sideBarItems = [
       {
         icon: Clock,
         name: "Recently Added",
-          link:'/recently_played'
+        link: "/recently_played",
       },
       {
         icon: Repeat,
         name: "Most Played",
-          link:'/most_played'
+        link: "/most_played",
       },
     ],
   },
@@ -52,18 +54,37 @@ export const sideBarItems = [
       {
         icon: ListMusic,
         name: "Playlists",
-          link:'/playlists'
+        link: "/playlists",
       },
       {
         icon: Heart,
         name: "Favourites",
-          link:'/favourites'
+        link: "/favourites",
       },
       {
         icon: ListPlus,
         name: "Add Playlist",
-          link:'/add_playlist'
+        link: "/add_playlist",
       },
     ],
+  },
+];
+
+export const dashboardSideBarItems = [
+  {
+    title: "Dashboard",
+    icon: Home,
+  },
+  {
+    title: "Users",
+    icon: User,
+  },
+  {
+    title: "Songs",
+    icon: Music2,
+  },
+  {
+    title: "Artists",
+    icon: BarChart3,
   },
 ];

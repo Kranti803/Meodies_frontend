@@ -7,7 +7,7 @@ const ArtistSongs = () => {
   const { data } = useGetArtistSongQuery(artistId!);
 
   return (
-    <div className="min-h-screen bg-[#181818] text-white px-6 py-8">
+    <div className="min-h-screen bg-secondary text-white px-6 py-8">
       <h1 className="text-4xl font-bold mb-8">{artistName} Songs</h1>
 
       <section>

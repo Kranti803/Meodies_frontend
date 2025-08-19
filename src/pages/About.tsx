@@ -4,12 +4,12 @@ const About = () => {
   return (
     <>
       <Navbar />
-      <div className="max-h-screen bg-[#181818] text-white px-1 lg:px-6 py-12 flex items-center justify-center">
-        <div className="max-w-4xl bg-[#1f1f1f] p-8 rounded-2xl shadow-lg space-y-6">
-          <h1 className="text-4xl font-bold text-[#62d962]mb-4">About Us</h1>
+      <div className="max-h-screen bg-secondary font-primary text-white px-1 lg:px-6 py-12 flex items-center justify-center">
+        <div className="max-w-4xl bg-bgDark p-8 rounded-2xl shadow-lg space-y-6">
+          <h1 className="text-4xl font-bold text-primary mb-4">About Us</h1>
           <p className="text-gray-300 text-lg">
             Welcome to{" "}
-            <span className="text-[#62d962] font-semibold">Melodies</span> —
+            <span className="text-primary  font-semibold">Melodies</span> —
             your one-stop destination for discovering, sharing, and enjoying
             music like never before.
           </p>

@@ -32,7 +32,7 @@ const Banner = () => {
             </button>
             <button
               aria-label="Create a playlist"
-              className="border-2 border-primary text-primary px-4 py-2 rounded-md font-semibold"
+              className="border-2 border-primary text-primary px-4 py-2 rounded-md font-semibold cursor-pointer"
             >
               Create Playlist
             </button>
