@@ -8,7 +8,6 @@ interface SongsInterface {
   isMute: boolean;
   autoPlay: boolean;
   currentSong: number;
-  currentSongDuration: number;
   currentSongTotalDuration: number;
   volume: number;
   isRepeat: boolean;
@@ -21,7 +20,6 @@ const initialState: SongsInterface = {
   isMute: false,
   autoPlay: false,
   currentSong: 0,
-  currentSongDuration: 0,
   currentSongTotalDuration: 0,
   volume: 1,
   isRepeat: false,
@@ -50,9 +48,7 @@ const songSlice = createSlice({
     setCurrentSong: (state, action: PayloadAction<number>) => {
       state.currentSong = action.payload;
     },
-    setCurrentSongDuration: (state, action: PayloadAction<number>) => {
-      state.currentSongDuration = action.payload;
-    },
+  
     setCurrentSongTotalDuration: (state, action: PayloadAction<number>) => {
       state.currentSongTotalDuration = action.payload;
     },
@@ -75,7 +71,6 @@ export const {
   setIsMute,
   setAutoPlay,
   setCurrentSong,
-  setCurrentSongDuration,
   setCurrentSongTotalDuration,
   setVolume,
   setIsRepeat,

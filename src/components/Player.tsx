@@ -1,31 +1,24 @@
-import {
-  Pause,
-  SkipBack,
-  SkipForward,
-  Volume2,
-  Repeat,
-  Shuffle,
-  Play,
-  VolumeX,
-} from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
   setIsPlaying,
-  setIsRepeat,
-  setIsMute,
   setAutoPlay,
   setCurrentSong,
   setVolume,
-  setCurrentSongDuration,
   setCurrentSongTotalDuration,
 } from "../features/songs/songSlice";
+import MusicPlayerProgressBar from "./MusicPlayerProgressBar";
+import PlayerVolume from "./PlayerVolume";
+import PlayerControlsButtons from "./PlayerControlsButtons";
+import PlayerSongInfo from "./PlayerSongInfo";
 
 const MusicPlayer = () => {
   const { currentSongPlayingIndex } = useAppSelector((state) => state.song);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  console.log("song-playing");
+  const [progress, setProgress] = useState(0);
+
+  console.log("re-render from main player comp");
 
   const {
     songs,
@@ -34,14 +27,12 @@ const MusicPlayer = () => {
     isMute,
     autoPlay,
     currentSong,
-    volume,
-    currentSongDuration,
     currentSongTotalDuration,
   } = useAppSelector((state) => state.song);
 
   const dispatch = useAppDispatch();
 
-  const handlePlay = () => {
+  const handlePlay = useCallback(() => {
     if (!isPlaying) {
       dispatch(setIsPlaying(true));
       audioRef?.current?.play();
@@ -49,35 +40,32 @@ const MusicPlayer = () => {
       dispatch(setIsPlaying(false));
       audioRef?.current?.pause();
     }
-  };
+  }, [isPlaying]);
 
   const handleSeekTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) audioRef.current.currentTime = Number(e.target.value);
   };
 
-  const handleCurrentSongVolume = () => {
-    if (audioRef.current) {
-      dispatch(setVolume(audioRef.current.volume));
-    }
-  };
+  const handleVolumeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newVolume = Number(e.target.value);
+      if (audioRef.current) {
+        audioRef.current.volume = newVolume;
+        dispatch(setVolume(newVolume));
+      }
+    },
+    []
+  );
 
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = Number(e.target.value);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-      dispatch(setVolume(newVolume));
-    }
-  };
-
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentSong < songs.length - 1) {
       dispatch(setIsPlaying(true));
       dispatch(setCurrentSong(currentSong + 1));
       dispatch(setAutoPlay(true));
     }
-  };
+  }, [currentSong,songs]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (currentSong === 0) {
       // Restart song if already at the first one
       if (audioRef.current) {
@@ -91,30 +79,18 @@ const MusicPlayer = () => {
 
     dispatch(setCurrentSong(currentSong - 1));
     dispatch(setIsPlaying(true));
-  };
+  }, [currentSong]);
 
-  const handleSongTotalDuration = () => {
+  const handleLoadedMetaData = () => {
     if (audioRef.current) {
-      dispatch(
-        setCurrentSongTotalDuration(Math.floor(audioRef.current.duration))
-      );
+      dispatch(setCurrentSongTotalDuration(audioRef.current.duration));
+      dispatch(setVolume(audioRef.current.volume));
     }
   };
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateTime = () => {
-      dispatch(setCurrentSongDuration(audio.currentTime));
-    };
-
-    audio.addEventListener("timeupdate", updateTime);
-
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime);
-    };
-  }, [dispatch]);
+  const handleTimeUpdate = () => {
+    if (audioRef.current) setProgress(audioRef.current.currentTime);
+  };
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -140,114 +116,33 @@ const MusicPlayer = () => {
         loop={isRepeat}
         muted={isMute}
         autoPlay={autoPlay}
-        onLoadedMetadata={() => {
-          handleCurrentSongVolume();
-          handleSongTotalDuration();
-        }}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetaData}
       />
+
       <div className="h-28 fixed bottom-0 left-0 right-0 bg-bgDark text-white shadow-lg px-4 py-3 flex items-center justify-center sm:justify-between z-50">
         {/* Song Info */}
-        <div className="hidden sm:flex items-center gap-3 w-1/3">
-          <img
-            src={songs[currentSong]?.image?.url}
-            alt="Cover"
-            className="w-12 h-12 object-cover rounded-md md:block hidden"
-          />
-          <div className="w-[calc(100%-48px)]">
-            <h4 className="text-sm font-semibold">
-              {songs[currentSong]?.title}
-            </h4>
-            <p className="text-xs text-gray-400">The Neighbourhood</p>
-          </div>
-        </div>
+        <PlayerSongInfo />
 
         {/* Player Controls */}
         <div className="flex flex-col items-center gap-1 w-1/3">
-          <div className="flex items-center gap-8 sm:gap-4">
-            {/* Shuffle */}
-            <button className=" hover:text-primary cursor-pointer border-none outline-none">
-              <Shuffle size={18} />
-            </button>
-
-            <button
-              onClick={handlePrev}
-              className="hover:text-primary cursor-pointer border-none outline-none"
-            >
-              <SkipBack size={20} />
-            </button>
-
-            <button
-              onClick={handlePlay}
-              className="bg-primary text-white p-2 rounded-full transition cursor-pointer border-none outline-none"
-            >
-              {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-            </button>
-
-            <button
-              onClick={handleNext}
-              className="hover:text-primary cursor-pointer border-none outline-none"
-            >
-              <SkipForward size={20} />
-            </button>
-
-            {/* Repeat */}
-            <button
-              onClick={() => dispatch(setIsRepeat(!isRepeat))}
-              className="hover:text-primary cursor-pointer border-none outline-none"
-            >
-              {isRepeat ? (
-                <Repeat size={18} className="text-primary" />
-              ) : (
-                <Repeat size={18} />
-              )}
-            </button>
-          </div>
+          {/* Control buttons */}
+          <PlayerControlsButtons
+            handleNext={handleNext}
+            handlePlay={handlePlay}
+            handlePrev={handlePrev}
+          />
 
           {/* Progress bar */}
-          <div className="flex items-center justify-center gap-2 w-full text-xs text-gray-400 mt-2">
-            <span>
-              {new Date(currentSongDuration * 1000)
-                .toISOString()
-                .substring(14, 19)}
-            </span>
-            <input
-              type="range"
-              min="0"
-              max={currentSongTotalDuration}
-              value={currentSongDuration}
-              onChange={(e) => handleSeekTime(e)}
-              className="w-5xl h-1 accent-primary cursor-pointer"
-            />
-            <span>
-              {new Date(currentSongTotalDuration * 1000)
-                .toISOString()
-                .substring(14, 19)}
-            </span>
-          </div>
+          <MusicPlayerProgressBar
+            progress={progress}
+            currentSongTotalDuration={currentSongTotalDuration}
+            handleSeekTime={handleSeekTime}
+          />
         </div>
 
         {/* Volume */}
-        <div className="hidden sm:flex items-center gap-2 w-1/3 justify-end">
-          <button
-            className="border-none outline-none cursor-pointer"
-            onClick={() => dispatch(setIsMute(!isMute))}
-          >
-            {isMute === true || volume === 0 ? (
-              <VolumeX size={18} />
-            ) : (
-              <Volume2 size={18} />
-            )}
-          </button>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={(e) => handleVolumeChange(e)}
-            className="w-24 h-1 accent-primary cursor-pointer"
-          />
-        </div>
+        <PlayerVolume handleVolumeChange={handleVolumeChange} />
       </div>
     </>
   );
