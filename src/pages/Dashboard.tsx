@@ -5,6 +5,8 @@ import DashboardStats from "../components/DashboardStats";
 import GetAllSongs from "./GetAllSongs";
 import GetAllUsers from "./GetAllUsers";
 import GetAllArtists from "./GetAllArtists";
+import UploadSong from "./Upload";
+import AddArtistImage from "./AddArtistImage";
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,11 +22,15 @@ const AdminDashboard = () => {
         return <GetAllUsers />;
       case "Artists":
         return <GetAllArtists />;
+      case "Upload Song":
+        return <UploadSong />;
+      case "Add Artist Image":
+        return <AddArtistImage />;
     }
   };
 
   return (
-    <div className="min-h-screen flex bg-secondary text-white">
+    <div className="min-h-screen flex bg-secondary text-white font-primary">
       {/* Sidebar */}
       <DashboardSidebar
         sidebarOpen={sidebarOpen}
@@ -34,7 +40,7 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-6 md:ml-64 overflow-y-auto">
-        <h1 className="text-3xl font-bold mb-6 flex items-center gap-x-2">
+        <h1 className="text-3xl font-bold mb-6 flex items-center gap-x-2 border-b border-gray-400 pb-2">
           <span
             onClick={() => setSidebarOpen(true)}
             className="text-primary cursor-pointer md:hidden block"

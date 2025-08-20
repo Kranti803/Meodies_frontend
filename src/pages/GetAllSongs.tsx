@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 
 interface Song {
   _id: string;
@@ -24,14 +24,11 @@ const GetAllSongs = () => {
     }
   };
 
-  const updateSong = (id: string) => {
-    // TODO: Navigate to song edit form or open modal
-    alert(`Edit song with ID: ${id}`);
-  };
+
 
   return (
-    <div className="min-h-screen bg-[#181818] text-white p-8">
-      <h1 className="text-3xl font-bold text-[#62d962] mb-6">All Songs</h1>
+    <div className="min-h-screen bg-inherit text-white p-8 font-primary">
+      <h1 className="text-3xl font-bold text-primary mb-6 font-primary">All Songs</h1>
 
       <div className="overflow-x-auto rounded-xl shadow bg-[#2a2a2a] p-6">
         <table className="w-full table-auto border-collapse border border-gray-700">
@@ -64,13 +61,6 @@ const GetAllSongs = () => {
                   {song.genre}
                 </td>
                 <td className="border border-gray-700 px-4 py-2 space-x-2">
-                  <button
-                    onClick={() => updateSong(song._id)}
-                    className="bg-[#62d962] text-black p-2 rounded hover:bg-green-500 transition"
-                    title="Edit Song"
-                  >
-                    <Pencil size={16} />
-                  </button>
                   <button
                     onClick={() => deleteSong(song._id)}
                     className="bg-red-600 p-2 rounded hover:bg-red-700 transition"

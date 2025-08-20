@@ -1,11 +1,10 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useGetAllSongsQuery } from "../services/songApi";
-import { setcurrentSongPlayingIndex } from "../features/songs/songSlice";
-import { useAppDispatch } from "../store/hooks";
+import { setCurrentSongPlayingIndex } from "../features/songs/songSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useRef } from "react";
 
 export default function TopPlayedSongs() {
-  const { data } = useGetAllSongsQuery();
+  const {songs} = useAppSelector(state=>state.song)
   const dispatch = useAppDispatch();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -49,11 +48,11 @@ export default function TopPlayedSongs() {
           ref={scrollContainerRef}
           className="flex space-x-4 overflow-x-scroll scrollbar-hide pb-4 scroll-smooth"
         >
-          {data?.songs?.map((song, idx) => (
+          {songs?.map((song, idx) => (
             <div
               key={idx}
               className="flex-shrink-0 w-40 hover:bg-bgDark p-2 rounded-lg cursor-pointer"
-              onClick={() => dispatch(setcurrentSongPlayingIndex(idx))}
+              onClick={() => dispatch(setCurrentSongPlayingIndex(idx))}
             >
               <img
                 src={song?.image?.url}

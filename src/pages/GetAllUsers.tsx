@@ -37,8 +37,8 @@ const GetAllUsers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#181818] text-white p-8">
-      <h1 className="text-3xl font-bold text-[#62d962] mb-6">All Users</h1>
+    <div className="min-h-screen bg-inherit font-primary text-white p-8">
+      <h1 className="text-3xl font-bold text-primary mb-6">All Users</h1>
 
       <div className="overflow-x-auto rounded-xl shadow bg-[#2a2a2a] p-6">
         <table className="w-full table-auto border-collapse border border-gray-700">
@@ -73,7 +73,7 @@ const GetAllUsers = () => {
                 <td className="border border-gray-700 px-4 py-2 space-x-2">
                   <button
                     onClick={() => toggleRole(user._id)}
-                    className="bg-[#62d962] text-black px-3 py-1 rounded hover:bg-green-500 transition"
+                    className="bg-primary px-3 py-1 rounded hover:bg-primary text-white transition"
                   >
                     Change role
                   </button>

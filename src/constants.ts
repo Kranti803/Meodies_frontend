@@ -9,6 +9,8 @@ import {
   ListPlus,
   Music2,
   BarChart3,
+  Upload,
+  Image,
 } from "lucide-react";
 
 export const sideBarItems = [
@@ -86,5 +88,13 @@ export const dashboardSideBarItems = [
   {
     title: "Artists",
     icon: BarChart3,
+  },
+  {
+    title: "Upload Song",
+    icon: Upload,
+  },
+  {
+    title: "Add Artist Image",
+    icon: Image,
   },
 ];

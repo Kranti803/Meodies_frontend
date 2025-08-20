@@ -8,34 +8,45 @@ import {
   Play,
   VolumeX,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useGetAllSongsQuery } from "../services/songApi";
-import { useAppSelector } from "../store/hooks";
+import { useEffect, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  setIsPlaying,
+  setIsRepeat,
+  setIsMute,
+  setAutoPlay,
+  setCurrentSong,
+  setVolume,
+  setCurrentSongDuration,
+  setCurrentSongTotalDuration,
+} from "../features/songs/songSlice";
 
 const MusicPlayer = () => {
   const { currentSongPlayingIndex } = useAppSelector((state) => state.song);
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isRepeat, setIsRepeat] = useState(false);
-  const [isMute, setIsMute] = useState(false);
-  const [autoPlay, setAutoplay] = useState(false);
-  const [currentSong, setCurrentSong] = useState(currentSongPlayingIndex);
-  const [currentSongDuration, setCurrentSongDuration] = useState(0);
-  const [currentSongTotalDuration, setCurrentSongTotalDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const currentSongRef = useRef(0);
-  const { data } = useGetAllSongsQuery();
-  const songs = data?.songs || [];
 
+  console.log("song-playing");
+
+  const {
+    songs,
+    isPlaying,
+    isRepeat,
+    isMute,
+    autoPlay,
+    currentSong,
+    volume,
+    currentSongDuration,
+    currentSongTotalDuration,
+  } = useAppSelector((state) => state.song);
+
+  const dispatch = useAppDispatch();
 
   const handlePlay = () => {
     if (!isPlaying) {
-      setIsPlaying(true);
+      dispatch(setIsPlaying(true));
       audioRef?.current?.play();
     } else {
-      setIsPlaying(false);
+      dispatch(setIsPlaying(false));
       audioRef?.current?.pause();
     }
   };
@@ -46,7 +57,7 @@ const MusicPlayer = () => {
 
   const handleCurrentSongVolume = () => {
     if (audioRef.current) {
-      setVolume(audioRef.current.volume);
+      dispatch(setVolume(audioRef.current.volume));
     }
   };
 
@@ -54,39 +65,39 @@ const MusicPlayer = () => {
     const newVolume = Number(e.target.value);
     if (audioRef.current) {
       audioRef.current.volume = newVolume;
-      setVolume(newVolume);
+      dispatch(setVolume(newVolume));
     }
   };
 
   const handleNext = () => {
-    if (currentSongRef.current < songs.length - 1) {
-      currentSongRef.current += 1;
-      setIsPlaying(true);
-      setCurrentSong(currentSongRef.current);
-      setAutoplay(true);
+    if (currentSong < songs.length - 1) {
+      dispatch(setIsPlaying(true));
+      dispatch(setCurrentSong(currentSong + 1));
+      dispatch(setAutoPlay(true));
     }
   };
 
   const handlePrev = () => {
-    if (currentSongRef.current === 0) {
+    if (currentSong === 0) {
       // Restart song if already at the first one
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
-        setIsPlaying(true);
-        setAutoplay(true);
+        dispatch(setIsPlaying(true));
+        dispatch(setAutoPlay(true));
       }
       return;
     }
 
-    currentSongRef.current -= 1;
-    setCurrentSong(currentSongRef.current);
-    setIsPlaying(true);
+    dispatch(setCurrentSong(currentSong - 1));
+    dispatch(setIsPlaying(true));
   };
 
   const handleSongTotalDuration = () => {
     if (audioRef.current) {
-      setCurrentSongTotalDuration(Math.floor(audioRef.current.duration));
+      dispatch(
+        setCurrentSongTotalDuration(Math.floor(audioRef.current.duration))
+      );
     }
   };
 
@@ -95,7 +106,7 @@ const MusicPlayer = () => {
     if (!audio) return;
 
     const updateTime = () => {
-      setCurrentSongDuration(audio.currentTime);
+      dispatch(setCurrentSongDuration(audio.currentTime));
     };
 
     audio.addEventListener("timeupdate", updateTime);
@@ -103,21 +114,19 @@ const MusicPlayer = () => {
     return () => {
       audio.removeEventListener("timeupdate", updateTime);
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const handleSongEnded = () => setIsPlaying(false);
+    const handleSongEnded = () => dispatch(setIsPlaying(false));
     audio.addEventListener("ended", handleSongEnded);
     return () => audio.removeEventListener("ended", handleSongEnded);
   }, []);
 
   useEffect(() => {
-    setCurrentSong(currentSongPlayingIndex);
-    setAutoplay(true);
-    setIsPlaying(true)
-  }, [currentSongPlayingIndex]);
+    dispatch(setCurrentSong(currentSongPlayingIndex));
+  }, [currentSongPlayingIndex, dispatch]);
 
   return (
     <>
@@ -183,7 +192,7 @@ const MusicPlayer = () => {
 
             {/* Repeat */}
             <button
-              onClick={() => setIsRepeat(!isRepeat)}
+              onClick={() => dispatch(setIsRepeat(!isRepeat))}
               className="hover:text-primary cursor-pointer border-none outline-none"
             >
               {isRepeat ? (
@@ -221,7 +230,7 @@ const MusicPlayer = () => {
         <div className="hidden sm:flex items-center gap-2 w-1/3 justify-end">
           <button
             className="border-none outline-none cursor-pointer"
-            onClick={() => setIsMute(!isMute)}
+            onClick={() => dispatch(setIsMute(!isMute))}
           >
             {isMute === true || volume === 0 ? (
               <VolumeX size={18} />

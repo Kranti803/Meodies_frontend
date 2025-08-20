@@ -7,12 +7,14 @@ import SplashScreen from "./pages/SplashScreen";
 import { setUser } from "./features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "./store/hooks";
+import { useGetAllSongsQuery } from "./services/songApi";
 
 const App = () => {
   const dispatch = useAppDispatch();
   const { data, isLoading, isSuccess } = useGetProfileQuery();
+  const { isLoading: isSongsLoading } = useGetAllSongsQuery();
   const [isAuthResolved, setIsAuthResolved] = useState(false);
-  
+
   useEffect(() => {
     if (isSuccess && data?.user) dispatch(setUser(data?.user));
     if (!isLoading) {
@@ -20,7 +22,7 @@ const App = () => {
     }
   }, [data, isSuccess, dispatch, isLoading]);
 
-  if (!isAuthResolved) return <SplashScreen />;
+  if (!isAuthResolved || isSongsLoading) return <SplashScreen />;
   return (
     <SidebarProvider>
       <RouterProvider router={router} />
