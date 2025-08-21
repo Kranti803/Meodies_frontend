@@ -2,10 +2,10 @@ import { useAppSelector } from "../store/hooks";
 import SongCard from "./SongCard";
 
 const TrendingSongs = () => {
-  // const { data } = useGetAllSongsQuery();
   const {songs} = useAppSelector(state=>state.song)
 
-  const filteredSongs = songs.filter((song) => song.trending === true);
+  const trendingSongs = songs.filter((song) => song.trending === true);
+  console.log(trendingSongs)
 
   return (
     <>
@@ -14,7 +14,7 @@ const TrendingSongs = () => {
           Trending <span className="text-primary">Songs</span>
         </h2>
       </div>
-      {filteredSongs?.map((song, idx) => (
+      {trendingSongs?.map((song, idx) => (
         <SongCard song={song} idx={idx} key={idx} />
       ))}
     </>

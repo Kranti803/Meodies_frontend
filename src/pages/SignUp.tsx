@@ -32,9 +32,9 @@ const Signup = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#181818] text-white px-4">
-      <div className="bg-[#1f1f1f] max-w-md w-full rounded-2xl shadow-lg p-8 space-y-6">
-        <h2 className="text-3xl font-bold text-[#62d962]">Create Account</h2>
+    <div className="min-h-screen flex items-center justify-center bg-secondary text-white px-4 font-primary">
+      <div className="bg-bgDark max-w-md w-full rounded-2xl shadow-lg p-8 space-y-6">
+        <h2 className="text-3xl font-bold text-primary">Create Account</h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col">
@@ -42,7 +42,7 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Your name"
-              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#62d962]"
+              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -54,7 +54,7 @@ const Signup = () => {
             <input
               type="email"
               placeholder="you@example.com"
-              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#62d962]"
+              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -66,7 +66,7 @@ const Signup = () => {
             <input
               type="password"
               placeholder="•••••••"
-              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#62d962]"
+              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -77,7 +77,7 @@ const Signup = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full grid place-items-center bg-[#62d962] hover:bg-[#62d962] transition py-2 rounded-lg font-semibold"
+            className="w-full grid place-items-center bg-primary hover:bg-primary transition py-2 rounded-lg font-semibold"
           >
             {isLoading ? <Spinner /> : "Sign Up"}
           </button>
@@ -96,7 +96,7 @@ const Signup = () => {
 
         <p className="text-sm text-gray-400 text-center">
           Already have an account?{" "}
-          <Link to="/login" className="text-[#62d962] hover:underline">
+          <Link to="/login" className="text-primary hover:underline">
             Log in
           </Link>
         </p>

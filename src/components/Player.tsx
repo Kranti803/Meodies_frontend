@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
   setIsPlaying,
@@ -16,19 +16,10 @@ const MusicPlayer = () => {
   const { currentSongPlayingIndex } = useAppSelector((state) => state.song);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const [progress, setProgress] = useState(0);
+  // console.log("re-render from main player comp");
 
-  console.log("re-render from main player comp");
-
-  const {
-    songs,
-    isPlaying,
-    isRepeat,
-    isMute,
-    autoPlay,
-    currentSong,
-    currentSongTotalDuration,
-  } = useAppSelector((state) => state.song);
+  const { songs, isPlaying, isRepeat, isMute, autoPlay, currentSong } =
+    useAppSelector((state) => state.song);
 
   const dispatch = useAppDispatch();
 
@@ -41,10 +32,6 @@ const MusicPlayer = () => {
       audioRef?.current?.pause();
     }
   }, [isPlaying]);
-
-  const handleSeekTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (audioRef.current) audioRef.current.currentTime = Number(e.target.value);
-  };
 
   const handleVolumeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +50,7 @@ const MusicPlayer = () => {
       dispatch(setCurrentSong(currentSong + 1));
       dispatch(setAutoPlay(true));
     }
-  }, [currentSong,songs]);
+  }, [currentSong, songs]);
 
   const handlePrev = useCallback(() => {
     if (currentSong === 0) {
@@ -86,10 +73,6 @@ const MusicPlayer = () => {
       dispatch(setCurrentSongTotalDuration(audioRef.current.duration));
       dispatch(setVolume(audioRef.current.volume));
     }
-  };
-
-  const handleTimeUpdate = () => {
-    if (audioRef.current) setProgress(audioRef.current.currentTime);
   };
 
   useEffect(() => {
@@ -116,7 +99,6 @@ const MusicPlayer = () => {
         loop={isRepeat}
         muted={isMute}
         autoPlay={autoPlay}
-        onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetaData}
       />
 
@@ -134,11 +116,7 @@ const MusicPlayer = () => {
           />
 
           {/* Progress bar */}
-          <MusicPlayerProgressBar
-            progress={progress}
-            currentSongTotalDuration={currentSongTotalDuration}
-            handleSeekTime={handleSeekTime}
-          />
+          <MusicPlayerProgressBar audioRef={audioRef} />
         </div>
 
         {/* Volume */}

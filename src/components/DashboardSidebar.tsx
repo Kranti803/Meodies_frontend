@@ -31,10 +31,11 @@ const DashboardSidebar = ({
             </span>
           </h2>
           <ul className="space-y-6 text-gray-300">
-            {dashboardSideBarItems.map((item) => {
+            {dashboardSideBarItems.map((item,idx) => {
               const Icon = item.icon;
               return (
                 <li 
+                key={idx}
                 onClick={()=>setActiveMenu(item.title)}
                 className="flex items-center gap-2 hover:text-primary cursor-pointer">
                   <Icon size={18} /> {item.title}

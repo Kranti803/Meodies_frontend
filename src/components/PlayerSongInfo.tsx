@@ -3,7 +3,6 @@ import React from "react";
 
 const PlayerSongInfo = () => {
   const { songs, currentSong } = useAppSelector((state) => state.song);
-//   console.log("re-render from player song info");
 
   return (
     <div className="hidden sm:flex items-center gap-3 w-1/3">

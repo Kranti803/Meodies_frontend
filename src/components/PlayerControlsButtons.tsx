@@ -22,7 +22,6 @@ const PlayerControlsButtons = ({
 }: PlayerControlsButtons) => {
   const dispatch = useAppDispatch();
   const { isRepeat, isPlaying } = useAppSelector((state) => state.song);
-//   console.log("re-render from player component buttons");
 
 
   return (

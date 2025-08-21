@@ -10,7 +10,6 @@ const PlayerVolume = ({ handleVolumeChange }: PlayerVolumeProps) => {
   const dispatch = useAppDispatch();
 
   const { isMute, volume } = useAppSelector((state) => state.song);
-//   console.log("re-render from player volume control");
 
   return (
     <div className="hidden sm:flex items-center gap-2 w-1/3 justify-end">
