@@ -1,4 +1,4 @@
-import { setAllSongs } from "../features/songs/songSlice";
+import { setAllSongs, setCurrentSong } from "../features/songs/songSlice";
 import { myApi } from "./myApi";
 import { type Isong } from "../interfaces/songInterface";
 import type { Iartist } from "../interfaces/artistsInterface";
@@ -15,6 +15,7 @@ export const songApi = myApi.injectEndpoints({
           const { data } = await queryFulfilled;
           if (data.success) {
             dispatch(setAllSongs(data.songs)); // saving songs to store
+            dispatch(setCurrentSong(data.songs[0])); //setting the first song on the initail load
           }
         } catch (error) {
           console.error("Failed to fetch songs:", error);

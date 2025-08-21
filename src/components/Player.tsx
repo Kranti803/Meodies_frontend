@@ -6,6 +6,7 @@ import {
   setCurrentSong,
   setVolume,
   setCurrentSongTotalDuration,
+  setCurrentSongPlayingIndex,
 } from "../features/songs/songSlice";
 import MusicPlayerProgressBar from "./MusicPlayerProgressBar";
 import PlayerVolume from "./PlayerVolume";
@@ -15,8 +16,6 @@ import PlayerSongInfo from "./PlayerSongInfo";
 const MusicPlayer = () => {
   const { currentSongPlayingIndex } = useAppSelector((state) => state.song);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // console.log("re-render from main player comp");
 
   const { songs, isPlaying, isRepeat, isMute, autoPlay, currentSong } =
     useAppSelector((state) => state.song);
@@ -31,7 +30,7 @@ const MusicPlayer = () => {
       dispatch(setIsPlaying(false));
       audioRef?.current?.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, dispatch]);
 
   const handleVolumeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,32 +40,39 @@ const MusicPlayer = () => {
         dispatch(setVolume(newVolume));
       }
     },
-    []
+    [dispatch]
   );
 
   const handleNext = useCallback(() => {
-    if (currentSong < songs.length - 1) {
+    if (currentSongPlayingIndex < songs.length - 1) {
       dispatch(setIsPlaying(true));
-      dispatch(setCurrentSong(currentSong + 1));
+      dispatch(setCurrentSongPlayingIndex(currentSongPlayingIndex + 1));
       dispatch(setAutoPlay(true));
     }
-  }, [currentSong, songs]);
+  }, [currentSongPlayingIndex, songs, dispatch]);
 
   const handlePrev = useCallback(() => {
-    if (currentSong === 0) {
-      // Restart song if already at the first one
+    if (currentSongPlayingIndex === 0) {
+      // restart if at first song
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
-        dispatch(setIsPlaying(true));
-        dispatch(setAutoPlay(true));
       }
+      dispatch(setIsPlaying(true));
       return;
     }
 
-    dispatch(setCurrentSong(currentSong - 1));
+    dispatch(setCurrentSongPlayingIndex(currentSongPlayingIndex - 1));
     dispatch(setIsPlaying(true));
-  }, [currentSong]);
+    dispatch(setAutoPlay(true));
+  }, [currentSongPlayingIndex, dispatch]);
+
+  const handleSuffle = useCallback(() => {
+    const randomSongIndex = Math.floor(Math.random() * songs.length);
+    dispatch(setCurrentSongPlayingIndex(randomSongIndex));
+    dispatch(setIsPlaying(true));
+    dispatch(setAutoPlay(true));
+  }, [dispatch, songs]);
 
   const handleLoadedMetaData = () => {
     if (audioRef.current) {
@@ -81,19 +87,18 @@ const MusicPlayer = () => {
     const handleSongEnded = () => dispatch(setIsPlaying(false));
     audio.addEventListener("ended", handleSongEnded);
     return () => audio.removeEventListener("ended", handleSongEnded);
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setCurrentSong(currentSongPlayingIndex));
-  }, [currentSongPlayingIndex, dispatch]);
+    dispatch(setCurrentSong(songs[currentSongPlayingIndex]));
+  }, [currentSongPlayingIndex, songs, dispatch]);
 
   return (
     <>
-      {/* audio tag */}
       <audio
         className="hidden"
         ref={audioRef}
-        src={songs[currentSong]?.songUrl?.url}
+        src={currentSong?.songUrl.url}
         controls
         controlsList="nodownload"
         loop={isRepeat}
@@ -101,25 +106,17 @@ const MusicPlayer = () => {
         autoPlay={autoPlay}
         onLoadedMetadata={handleLoadedMetaData}
       />
-
       <div className="h-28 fixed bottom-0 left-0 right-0 bg-bgDark text-white shadow-lg px-4 py-3 flex items-center justify-center sm:justify-between z-50">
-        {/* Song Info */}
         <PlayerSongInfo />
-
-        {/* Player Controls */}
         <div className="flex flex-col items-center gap-1 w-1/3">
-          {/* Control buttons */}
           <PlayerControlsButtons
             handleNext={handleNext}
             handlePlay={handlePlay}
             handlePrev={handlePrev}
+            handleSuffle={handleSuffle}
           />
-
-          {/* Progress bar */}
           <MusicPlayerProgressBar audioRef={audioRef} />
         </div>
-
-        {/* Volume */}
         <PlayerVolume handleVolumeChange={handleVolumeChange} />
       </div>
     </>

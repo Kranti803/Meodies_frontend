@@ -1,17 +1,18 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Isong } from "../../interfaces/songInterface";
 
-interface SongsInterface {
+export interface SongsInterface {
   songs: Isong[];
   currentSongPlayingIndex: number;
   isPlaying: boolean;
   isMute: boolean;
   autoPlay: boolean;
-  currentSong: number;
+  currentSong: Isong | null;
   currentSongTotalDuration: number;
   volume: number;
   isRepeat: boolean;
   // suffle: boolean;
+  trendingSongs: Isong[];
 }
 const initialState: SongsInterface = {
   songs: [],
@@ -19,11 +20,11 @@ const initialState: SongsInterface = {
   isPlaying: false,
   isMute: false,
   autoPlay: false,
-  currentSong: 0,
+  currentSong: null,
   currentSongTotalDuration: 0,
   volume: 1,
   isRepeat: false,
-  // suffle: false,
+  trendingSongs: [],
 };
 
 const songSlice = createSlice({
@@ -33,9 +34,7 @@ const songSlice = createSlice({
     setAllSongs: (state, action: PayloadAction<Isong[]>) => {
       state.songs = action.payload;
     },
-    setCurrentSongPlayingIndex: (state, action: PayloadAction<number>) => {
-      state.currentSongPlayingIndex = action.payload;
-    },
+
     setIsPlaying: (state, action: PayloadAction<boolean>) => {
       state.isPlaying = action.payload;
     },
@@ -45,10 +44,12 @@ const songSlice = createSlice({
     setAutoPlay: (state, action: PayloadAction<boolean>) => {
       state.autoPlay = action.payload;
     },
-    setCurrentSong: (state, action: PayloadAction<number>) => {
+    setCurrentSong: (state, action: PayloadAction<Isong>) => {
       state.currentSong = action.payload;
     },
-  
+    setCurrentSongPlayingIndex: (state, action: PayloadAction<number>) => {
+      state.currentSongPlayingIndex = action.payload;
+    },
     setCurrentSongTotalDuration: (state, action: PayloadAction<number>) => {
       state.currentSongTotalDuration = action.payload;
     },
@@ -58,15 +59,16 @@ const songSlice = createSlice({
     setIsRepeat: (state, action: PayloadAction<boolean>) => {
       state.isRepeat = action.payload;
     },
-    // setIsSuffle: (state, action: PayloadAction<boolean>) => {
-    //   state.suffle = action.payload;
-    // },
+
+    setTrendingSongs: (state) => {
+      if (state.songs)
+        state.trendingSongs = state.songs.filter((song) => song.trending);
+    },
   },
 });
 
 export const {
   setAllSongs,
-  setCurrentSongPlayingIndex,
   setIsPlaying,
   setIsMute,
   setAutoPlay,
@@ -74,8 +76,7 @@ export const {
   setCurrentSongTotalDuration,
   setVolume,
   setIsRepeat,
+  setTrendingSongs,
+  setCurrentSongPlayingIndex
 } = songSlice.actions;
 export default songSlice.reducer;
-
-
-

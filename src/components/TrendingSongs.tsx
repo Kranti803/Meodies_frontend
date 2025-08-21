@@ -1,11 +1,16 @@
-import { useAppSelector } from "../store/hooks";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import SongCard from "./SongCard";
+import { setTrendingSongs } from "../features/songs/songSlice";
 
 const TrendingSongs = () => {
-  const {songs} = useAppSelector(state=>state.song)
+  const { trendingSongs } = useAppSelector((state) => state.song);
 
-  const trendingSongs = songs.filter((song) => song.trending === true);
-  console.log(trendingSongs)
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setTrendingSongs());
+  }, [dispatch]);
 
   return (
     <>

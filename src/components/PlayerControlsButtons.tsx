@@ -14,20 +14,23 @@ interface PlayerControlsButtons {
   handlePrev: () => void;
   handlePlay: () => void;
   handleNext: () => void;
+  handleSuffle: () => void;
 }
 const PlayerControlsButtons = ({
   handleNext,
   handlePlay,
   handlePrev,
+  handleSuffle,
 }: PlayerControlsButtons) => {
   const dispatch = useAppDispatch();
   const { isRepeat, isPlaying } = useAppSelector((state) => state.song);
 
-
   return (
     <div className="flex items-center gap-8 sm:gap-4">
-      {/* Shuffle */}
-      <button className=" hover:text-primary cursor-pointer border-none outline-none">
+      <button
+        onClick={handleSuffle}
+        className=" hover:text-primary cursor-pointer border-none outline-none"
+      >
         <Shuffle size={18} />
       </button>
 
@@ -52,7 +55,6 @@ const PlayerControlsButtons = ({
         <SkipForward size={20} />
       </button>
 
-      {/* Repeat */}
       <button
         onClick={() => dispatch(setIsRepeat(!isRepeat))}
         className="hover:text-primary cursor-pointer border-none outline-none"

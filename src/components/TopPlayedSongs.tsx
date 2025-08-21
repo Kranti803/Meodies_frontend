@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { setCurrentSongPlayingIndex } from "../features/songs/songSlice";
+import { setCurrentSong } from "../features/songs/songSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useRef } from "react";
 
@@ -52,7 +52,7 @@ export default function TopPlayedSongs() {
             <div
               key={idx}
               className="flex-shrink-0 w-40 hover:bg-bgDark p-2 rounded-lg cursor-pointer"
-              onClick={() => dispatch(setCurrentSongPlayingIndex(idx))}
+              onClick={() => dispatch(setCurrentSong(song))}
             >
               <img
                 src={song?.image?.url}
