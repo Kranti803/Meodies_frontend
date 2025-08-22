@@ -32,7 +32,33 @@ export const songApi = myApi.injectEndpoints({
         url: `/artist/${artistId}/songs`,
       }),
     }),
+    getAllFavouriteSongs: builder.query<
+      { success: true; likedSongs: Isong[] },
+      void
+    >({
+      query: () => ({
+        url: "/song/liked",
+      }),
+      providesTags: ["LikedSongs"],
+    }),
+    toggleLikedSongs: builder.mutation<
+      { success: true; message: string },
+      { songId: string }
+    >({
+      query: ({ songId }) => ({
+        method: "PATCH",
+        url: "/song/liked/add_remove",
+        body: { songId },
+      }),
+      invalidatesTags: ["LikedSongs"],
+    }),
   }),
 });
 
-export const { useGetAllSongsQuery, useGetAllArtistsQuery, useGetArtistSongQuery } = songApi;
+export const {
+  useGetAllSongsQuery,
+  useGetAllArtistsQuery,
+  useGetArtistSongQuery,
+  useGetAllFavouriteSongsQuery,
+  useToggleLikedSongsMutation,
+} = songApi;

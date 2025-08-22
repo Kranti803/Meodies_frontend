@@ -24,6 +24,7 @@ import Discover from "../pages/Discover";
 import AllArtists from "../pages/AllArtists";
 import ArtistSongs from "../pages/ArtistSongs";
 import PlaylistDetails from "../pages/PlaylistDetails";
+import FavouriteSongs from "../pages/FavouriteSongs";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
           {
             path: "playlist/:playlistId/details",
             element: <PlaylistDetails />,
+          },
+          {
+            path: "favourites",
+            element: <FavouriteSongs />,
           },
         ],
       },
