@@ -9,6 +9,7 @@ interface IImageUrl {
 }
 
 export interface Isong {
+  _id?: string;
   title: string;
   image: IImageUrl;
   songUrl: ISongUrl;
@@ -17,8 +18,5 @@ export interface Isong {
   year: number;
   album: string;
   playCount?: number;
-  trending:boolean
+  trending: boolean;
 }
-
-
-

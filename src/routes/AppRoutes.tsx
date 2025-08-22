@@ -23,6 +23,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Discover from "../pages/Discover";
 import AllArtists from "../pages/AllArtists";
 import ArtistSongs from "../pages/ArtistSongs";
+import PlaylistDetails from "../pages/PlaylistDetails";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
           {
             path: "artist/:artistName/:artistId",
             element: <ArtistSongs />,
+          },
+          {
+            path: "playlist/:playlistId/details",
+            element: <PlaylistDetails />,
           },
         ],
       },

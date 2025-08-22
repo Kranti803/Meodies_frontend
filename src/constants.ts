@@ -56,7 +56,7 @@ export const sideBarItems = [
       {
         icon: ListMusic,
         name: "Playlists",
-        link: "/playlists",
+        link: "/allplaylists",
       },
       {
         icon: Heart,
@@ -66,7 +66,7 @@ export const sideBarItems = [
       {
         icon: ListPlus,
         name: "Add Playlist",
-        link: "/add_playlist",
+        link: "/createplaylist",
       },
     ],
   },
