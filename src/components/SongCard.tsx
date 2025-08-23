@@ -4,23 +4,27 @@ import { useAppDispatch } from "../store/hooks";
 import { Heart, Plus } from "lucide-react";
 import { useState } from "react";
 import SelectPlaylistModal from "./SelectPlaylistModal";
-import { useToggleLikedSongsMutation } from "../services/songApi";
+import { useToggleLikedSongsMutation, useGetAllFavouriteSongsQuery } from "../services/songApi";
 import { toast } from "react-toastify";
 
 const SongCard = ({
   song,
   idx,
   isPlaylistPage,
-  likedSongs,
 }: {
   song: Isong;
   idx: number;
   isPlaylistPage?: boolean;
-  likedSongs?: Isong[];
 }) => {
   const dispatch = useAppDispatch();
   const [toggleLikedSongs] = useToggleLikedSongsMutation();
   const [openModal, setOpenModal] = useState(false);
+
+  const { data } = useGetAllFavouriteSongsQuery();
+  const likedSongs = data?.likedSongs || [];
+
+  const isLiked = likedSongs.some((likedSong) => likedSong._id === song._id);
+
   const handleLikedSongs = async () => {
     try {
       const result = await toggleLikedSongs({ songId: song?._id! }).unwrap();
@@ -29,10 +33,6 @@ const SongCard = ({
       toast.error(error?.data?.message);
     }
   };
-
-  const isLiked = likedSongs
-    ? likedSongs.some((likedSong) => likedSong._id === song._id)
-    : false;
 
   return (
     <>
@@ -81,7 +81,7 @@ const SongCard = ({
           <button
             className="justify-self-end cursor-pointer px-2"
             onClick={(e) => {
-              e.stopPropagation(); // prevent song play (this shows the example of event bubbling and it is stopped by e.stopPropagation())
+              e.stopPropagation();
               setOpenModal(true);
             }}
           >

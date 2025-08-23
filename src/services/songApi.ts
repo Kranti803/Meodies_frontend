@@ -69,6 +69,15 @@ export const songApi = myApi.injectEndpoints({
         url: "/song/recently_played_songs",
       }),
     }),
+    increaseSongPlayCount: builder.mutation<
+      { success: true },
+      { songId: string }
+    >({
+      query: ({ songId }) => ({
+        url: `/song/${songId}/increase_play_count`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -80,4 +89,5 @@ export const {
   useToggleLikedSongsMutation,
   useUpdateRecentlyPlayedSongsMutation,
   useGetRecentlyPlayedSongsQuery,
+  useIncreaseSongPlayCountMutation,
 } = songApi;

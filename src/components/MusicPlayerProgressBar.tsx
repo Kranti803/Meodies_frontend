@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../store/hooks";
 import type { Isong } from "../interfaces/songInterface";
-import { useUpdateRecentlyPlayedSongsMutation } from "../services/songApi";
+import {
+  useIncreaseSongPlayCountMutation,
+  useUpdateRecentlyPlayedSongsMutation,
+} from "../services/songApi";
 
 interface ProgressBarProps {
   audioRef: React.RefObject<HTMLAudioElement | null>;
@@ -15,12 +18,13 @@ const MusicPlayerProgressBar = ({
   const [progress, setProgress] = useState(0);
   const { currentSongTotalDuration } = useAppSelector((state) => state.song);
   const [updateRecentlyPlayedSongs] = useUpdateRecentlyPlayedSongsMutation();
+  const [increaseSongPlayCount] = useIncreaseSongPlayCountMutation();
   const { user } = useAppSelector((state) => state.auth);
 
   const handleSeekTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
       audioRef.current.currentTime = Number(e.target.value);
-      setProgress(Number(e.target.value)); // update UI immediately
+      setProgress(Number(e.target.value));
     }
   };
 
@@ -30,6 +34,17 @@ const MusicPlayerProgressBar = ({
         await updateRecentlyPlayedSongs({
           songId: currentSong._id!,
           userId: user?._id!,
+        }).unwrap();
+    } catch (error: any) {
+      console.log(error?.data?.message);
+    }
+  };
+
+  const handleIncreaseSongPlayCount = async () => {
+    try {
+      if (currentSong)
+        await increaseSongPlayCount({
+          songId: currentSong._id!,
         }).unwrap();
     } catch (error: any) {
       console.log(error?.data?.message);
@@ -52,8 +67,8 @@ const MusicPlayerProgressBar = ({
         audio.currentTime >= audio.duration / 2
       ) {
         hasUpdated = true;
-        console.log("Song reached halfway:", currentSong.title);
         handleUpdateRecentlyPlayed();
+        handleIncreaseSongPlayCount();
       }
     };
 

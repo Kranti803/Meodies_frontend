@@ -4,7 +4,6 @@ import {
   User,
   Clock,
   Heart,
-  Repeat,
   ListMusic,
   ListPlus,
   Music2,
@@ -40,29 +39,25 @@ export const sideBarItems = [
     items: [
       {
         icon: Clock,
-        name: "Recently Added",
+        name: "Recently Played",
         link: "/recently_played",
-      },
-      {
-        icon: Repeat,
-        name: "Most Played",
-        link: "/most_played",
-      },
-    ],
-  },
-  {
-    title: "Playlist and Favourites",
-    items: [
-      {
-        icon: ListMusic,
-        name: "Playlists",
-        link: "/allplaylists",
       },
       {
         icon: Heart,
         name: "Favourites",
         link: "/favourites",
       },
+    ],
+  },
+  {
+    title: "Playlists",
+    items: [
+      {
+        icon: ListMusic,
+        name: "Playlists",
+        link: "/allplaylists",
+      },
+
       {
         icon: ListPlus,
         name: "Add Playlist",
