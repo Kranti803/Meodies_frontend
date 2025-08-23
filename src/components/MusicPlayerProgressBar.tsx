@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../store/hooks";
+import type { Isong } from "../interfaces/songInterface";
+import { useUpdateRecentlyPlayedSongsMutation } from "../services/songApi";
 
 interface ProgressBarProps {
   audioRef: React.RefObject<HTMLAudioElement | null>;
+  currentSong: Isong | null;
 }
 
-const MusicPlayerProgressBar = ({ audioRef }: ProgressBarProps) => {
+const MusicPlayerProgressBar = ({
+  audioRef,
+  currentSong,
+}: ProgressBarProps) => {
   const [progress, setProgress] = useState(0);
   const { currentSongTotalDuration } = useAppSelector((state) => state.song);
+  const [updateRecentlyPlayedSongs] = useUpdateRecentlyPlayedSongsMutation();
+  const { user } = useAppSelector((state) => state.auth);
 
   const handleSeekTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
@@ -16,15 +24,42 @@ const MusicPlayerProgressBar = ({ audioRef }: ProgressBarProps) => {
     }
   };
 
+  const handleUpdateRecentlyPlayed = async () => {
+    try {
+      if (currentSong)
+        await updateRecentlyPlayedSongs({
+          songId: currentSong._id!,
+          userId: user?._id!,
+        }).unwrap();
+    } catch (error: any) {
+      console.log(error?.data?.message);
+    }
+  };
+
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !currentSong) return;
 
-    const updateProgress = () => setProgress(audio.currentTime);
+    let hasUpdated = false;
+
+    const updateProgress = () => {
+      setProgress(audio.currentTime);
+
+      // checking halfway
+      if (
+        !hasUpdated &&
+        audio.duration > 0 &&
+        audio.currentTime >= audio.duration / 2
+      ) {
+        hasUpdated = true;
+        console.log("Song reached halfway:", currentSong.title);
+        handleUpdateRecentlyPlayed();
+      }
+    };
 
     audio.addEventListener("timeupdate", updateProgress);
     return () => audio.removeEventListener("timeupdate", updateProgress);
-  }, [audioRef]);
+  }, [audioRef, currentSong]);
 
   return (
     <div className="flex items-center justify-center gap-2 w-full text-xs text-gray-400 mt-2">

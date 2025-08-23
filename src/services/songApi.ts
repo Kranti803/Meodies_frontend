@@ -52,6 +52,23 @@ export const songApi = myApi.injectEndpoints({
       }),
       invalidatesTags: ["LikedSongs"],
     }),
+    updateRecentlyPlayedSongs: builder.mutation<
+      { success: true },
+      { userId: string; songId: string }
+    >({
+      query: ({ songId, userId }) => ({
+        url: `/song/${songId}/user/${userId}/update_recentlyplayed`,
+        method: "PUT",
+      }),
+    }),
+    getRecentlyPlayedSongs: builder.query<
+      { success: true; songs: Isong[] },
+      void
+    >({
+      query: () => ({
+        url: "/song/recently_played_songs",
+      }),
+    }),
   }),
 });
 
@@ -61,4 +78,6 @@ export const {
   useGetArtistSongQuery,
   useGetAllFavouriteSongsQuery,
   useToggleLikedSongsMutation,
+  useUpdateRecentlyPlayedSongsMutation,
+  useGetRecentlyPlayedSongsQuery,
 } = songApi;

@@ -84,7 +84,9 @@ const MusicPlayer = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const handleSongEnded = () => dispatch(setIsPlaying(false));
+    const handleSongEnded = () => {
+      dispatch(setIsPlaying(false));
+    };
     audio.addEventListener("ended", handleSongEnded);
     return () => audio.removeEventListener("ended", handleSongEnded);
   }, [dispatch]);
@@ -115,7 +117,10 @@ const MusicPlayer = () => {
             handlePrev={handlePrev}
             handleSuffle={handleSuffle}
           />
-          <MusicPlayerProgressBar audioRef={audioRef} />
+          <MusicPlayerProgressBar
+            audioRef={audioRef}
+            currentSong={currentSong}
+          />
         </div>
         <PlayerVolume handleVolumeChange={handleVolumeChange} />
       </div>

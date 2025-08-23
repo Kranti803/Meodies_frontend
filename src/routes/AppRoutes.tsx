@@ -25,6 +25,7 @@ import AllArtists from "../pages/AllArtists";
 import ArtistSongs from "../pages/ArtistSongs";
 import PlaylistDetails from "../pages/PlaylistDetails";
 import FavouriteSongs from "../pages/FavouriteSongs";
+import RecentlyPlayedSongs from "../pages/RecentlyPlayedSongs";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
           {
             path: "favourites",
             element: <FavouriteSongs />,
+          },
+          {
+            path: "recently_played",
+            element: <RecentlyPlayedSongs />,
           },
         ],
       },
