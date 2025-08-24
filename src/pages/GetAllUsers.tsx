@@ -1,39 +1,26 @@
-import { useState } from "react";
 import { Trash } from "lucide-react";
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  role: "user" | "admin";
-}
-
-const initialUsers: User[] = [
-  { _id: "1", name: "Alice", email: "alice@example.com", role: "user" },
-  { _id: "2", name: "Bob", email: "bob@example.com", role: "admin" },
-  { _id: "3", name: "Charlie", email: "charlie@example.com", role: "user" },
-];
+import {
+  useGetAllUsersQuery,
+  useToggleUserRoleMutation,
+} from "../services/adminApi";
+import { toast } from "react-toastify";
 
 const GetAllUsers = () => {
-  const [users, setUsers] = useState<User[]>(initialUsers);
+  const { data, refetch } = useGetAllUsersQuery();
+  const [toggleUserRole, { isLoading }] = useToggleUserRoleMutation();
 
   const deleteUser = (id: string) => {
-    // TODO: Replace with API call
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      setUsers(users.filter((user) => user._id !== id));
-      // call API to delete user here
-    }
+    console.log(id);
   };
 
-  const toggleRole = (id: string) => {
-    // TODO: Replace with API call
-    setUsers((prev) =>
-      prev.map((user) =>
-        user._id === id
-          ? { ...user, role: user.role === "user" ? "admin" : "user" }
-          : user
-      )
-    );
-    // call API to update role here
+  const toggleRole = async (id: string) => {
+    try {
+      const result = await toggleUserRole({ userId: id }).unwrap();
+      await refetch(); // ✅ use the query refetch, not mutation
+      toast.success(result?.message);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
   };
 
   return (
@@ -59,7 +46,7 @@ const GetAllUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {data?.users.map((user) => (
               <tr key={user._id} className="odd:bg-[#323232] even:bg-[#2a2a2a]">
                 <td className="border border-gray-700 px-4 py-2">
                   {user.name}
@@ -72,10 +59,11 @@ const GetAllUsers = () => {
                 </td>
                 <td className="border border-gray-700 px-4 py-2 space-x-2">
                   <button
+                    disabled={isLoading}
                     onClick={() => toggleRole(user._id)}
                     className="bg-primary px-3 py-1 rounded hover:bg-primary text-white transition"
                   >
-                    Change role
+                    {isLoading ? "Changing..." : "Change role"}
                   </button>
                   <button
                     onClick={() => deleteUser(user._id)}
