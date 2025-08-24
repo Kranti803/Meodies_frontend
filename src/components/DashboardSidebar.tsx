@@ -1,4 +1,4 @@
-import { X, Home, Users, Music2, LogOut, BarChart3 } from "lucide-react";
+import { X, LogOut } from "lucide-react";
 import { Link } from "react-router";
 import { dashboardSideBarItems } from "../constants";
 
@@ -31,13 +31,14 @@ const DashboardSidebar = ({
             </span>
           </h2>
           <ul className="space-y-6 text-gray-300">
-            {dashboardSideBarItems.map((item,idx) => {
+            {dashboardSideBarItems.map((item, idx) => {
               const Icon = item.icon;
               return (
-                <li 
-                key={idx}
-                onClick={()=>setActiveMenu(item.title)}
-                className="flex items-center gap-2 hover:text-primary cursor-pointer">
+                <li
+                  key={idx}
+                  onClick={() => setActiveMenu(item.title)}
+                  className="flex items-center gap-2 hover:text-primary cursor-pointer"
+                >
                   <Icon size={18} /> {item.title}
                 </li>
               );
