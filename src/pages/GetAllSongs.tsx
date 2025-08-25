@@ -1,34 +1,30 @@
-import { useState } from "react";
 import { Trash } from "lucide-react";
-
-interface Song {
-  _id: string;
-  title: string;
-  artist: string;
-  genre: string;
-}
-
-const initialSongs: Song[] = [
-  { _id: "1", title: "Ocean Eyes", artist: "Billie Eilish", genre: "Pop" },
-  { _id: "2", title: "Blinding Lights", artist: "The Weeknd", genre: "R&B" },
-  { _id: "3", title: "Shape of You", artist: "Ed Sheeran", genre: "Pop" },
-];
+import { useAppSelector } from "../store/hooks";
+import { useDeleteSongMutation } from "../services/adminApi";
+import { toast } from "react-toastify";
+import { useGetAllSongsQuery } from "../services/songApi";
 
 const GetAllSongs = () => {
-  const [songs, setSongs] = useState<Song[]>(initialSongs);
+  const { songs } = useAppSelector((state) => state.song);
+  const [deleteSong, { isLoading }] = useDeleteSongMutation();
+  const { refetch } = useGetAllSongsQuery();
 
-  const deleteSong = (id: string) => {
-    if (window.confirm("Are you sure you want to delete this song?")) {
-      setSongs((prev) => prev.filter((song) => song._id !== id));
-      // TODO: Call API to delete
+  const handleDeleteSong = async (id: string) => {
+    try {
+      const result = await deleteSong({ songId: id }).unwrap();
+      refetch();
+      toast.success(result.message);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+      console.log(error);
     }
   };
 
-
-
   return (
     <div className="min-h-screen bg-inherit text-white p-8 font-primary">
-      <h1 className="text-3xl font-bold text-primary mb-6 font-primary">All Songs</h1>
+      <h1 className="text-3xl font-bold text-primary mb-6 font-primary">
+        All Songs
+      </h1>
 
       <div className="overflow-x-auto rounded-xl shadow bg-[#2a2a2a] p-6">
         <table className="w-full table-auto border-collapse border border-gray-700">
@@ -41,7 +37,7 @@ const GetAllSongs = () => {
                 Artist
               </th>
               <th className="border border-gray-700 px-4 py-2 text-left">
-               Duration
+                Duration
               </th>
               <th className="border border-gray-700 px-4 py-2 text-left">
                 Actions
@@ -55,14 +51,17 @@ const GetAllSongs = () => {
                   {song.title}
                 </td>
                 <td className="border border-gray-700 px-4 py-2">
-                  {song.artist}
+                  {song.artists.join(",")}
                 </td>
                 <td className="border border-gray-700 px-4 py-2">
-                  {song.genre}
+                  {new Date(Math.trunc(song?.duration) * 1000)
+                    .toISOString()
+                    .substring(14, 19)}
                 </td>
                 <td className="border border-gray-700 px-4 py-2 space-x-2">
                   <button
-                    onClick={() => deleteSong(song._id)}
+                    disabled={isLoading}
+                    onClick={() => handleDeleteSong(song._id!)}
                     className="bg-red-600 p-2 rounded hover:bg-red-700 transition"
                     title="Delete Song"
                   >

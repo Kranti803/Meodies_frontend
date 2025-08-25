@@ -1,46 +1,19 @@
-import { useState } from "react";
 import { Trash } from "lucide-react";
-import artistImg from '../assets/unnamed.png'
-
-interface Artist {
-  _id: string;
-  name: string;
-  genre: string;
-  status: "artist" | "verified";
-  image: string; // ✅ New field
-}
-
-const initialArtists: Artist[] = [
-  {
-    _id: "1",
-    name: "Drake",
-    genre: "Hip-Hop",
-    status: "artist",
-    image: "https://i.pravatar.cc/100?img=11", // sample image
-  },
-  {
-    _id: "2",
-    name: "Taylor Swift",
-    genre: "Pop",
-    status: "verified",
-    image: "https://i.pravatar.cc/100?img=22",
-  },
-  {
-    _id: "3",
-    name: "Arijit Singh",
-    genre: "Bollywood",
-    status: "artist",
-    image: "https://i.pravatar.cc/100?img=33",
-  },
-];
+import { useGetAllArtistsQuery } from "../services/songApi";
+import { useDeleteArtistMutation } from "../services/adminApi";
+import { toast } from "react-toastify";
 
 const GetAllArtists = () => {
-  const [artists, setArtists] = useState<Artist[]>(initialArtists);
+  const { data, refetch } = useGetAllArtistsQuery();
+  const [deleteArtist, { isLoading }] = useDeleteArtistMutation();
 
-  const deleteArtist = (id: string) => {
-    if (window.confirm("Are you sure you want to delete this artist?")) {
-      setArtists(artists.filter((artist) => artist._id !== id));
-      // TODO: API call to delete artist
+  const handleDeleteArtist = async (id: string) => {
+    try {
+      const result = await deleteArtist({ artistId: id }).unwrap();
+      refetch();
+      toast.success(result?.message);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
     }
   };
 
@@ -64,14 +37,14 @@ const GetAllArtists = () => {
             </tr>
           </thead>
           <tbody>
-            {artists.map((artist) => (
+            {data?.artists?.map((artist) => (
               <tr
                 key={artist._id}
                 className="odd:bg-[#323232] even:bg-[#2a2a2a]"
               >
                 <td className="border border-gray-700 px-4 py-2">
                   <img
-                    src={artistImg}
+                    src={artist?.image?.url}
                     alt={artist.name}
                     className="w-18 rounded-lg h-18 object-cover"
                   />
@@ -81,7 +54,8 @@ const GetAllArtists = () => {
                 </td>
                 <td className="border border-gray-700 px-4 py-2 space-x-2">
                   <button
-                    onClick={() => deleteArtist(artist._id)}
+                    disabled={isLoading}
+                    onClick={() => handleDeleteArtist(artist._id!)}
                     className="bg-red-600 px-3 py-2 rounded hover:bg-red-700 transition"
                   >
                     <Trash size={16} />

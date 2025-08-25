@@ -1,5 +1,6 @@
 import { Trash } from "lucide-react";
 import {
+  useDeleteUserMutation,
   useGetAllUsersQuery,
   useToggleUserRoleMutation,
 } from "../services/adminApi";
@@ -8,15 +9,23 @@ import { toast } from "react-toastify";
 const GetAllUsers = () => {
   const { data, refetch } = useGetAllUsersQuery();
   const [toggleUserRole, { isLoading }] = useToggleUserRoleMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
-  const deleteUser = (id: string) => {
+  const handleDeleteUser = async(id: string) => {
     console.log(id);
+     try {
+      const result = await deleteUser({ userId: id }).unwrap();
+      await refetch();
+      toast.success(result?.message);
+    } catch (error: any) {
+      toast.error(error?.data?.message);
+    }
   };
 
   const toggleRole = async (id: string) => {
     try {
       const result = await toggleUserRole({ userId: id }).unwrap();
-      await refetch(); // ✅ use the query refetch, not mutation
+      await refetch();
       toast.success(result?.message);
     } catch (error: any) {
       toast.error(error?.data?.message);
@@ -66,7 +75,7 @@ const GetAllUsers = () => {
                     {isLoading ? "Changing..." : "Change role"}
                   </button>
                   <button
-                    onClick={() => deleteUser(user._id)}
+                    onClick={() => handleDeleteUser(user._id)}
                     className="bg-red-600 px-3 py-2 rounded hover:bg-red-700 transition"
                   >
                     <Trash size={16} />

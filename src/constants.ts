@@ -9,7 +9,7 @@ import {
   Music2,
   BarChart3,
   Upload,
-  Image,
+  Plus,
 } from "lucide-react";
 
 export const sideBarItems = [
@@ -89,7 +89,7 @@ export const dashboardSideBarItems = [
     icon: Upload,
   },
   {
-    title: "Add Artist Image",
-    icon: Image,
+    title: "Add Artist",
+    icon: Plus,
   },
 ];

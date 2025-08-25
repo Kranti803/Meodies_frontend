@@ -14,9 +14,6 @@ import AdminDashboard from "../pages/Dashboard";
 import CreatePlaylist from "../pages/CreatePlaylist";
 import Playlist from "../pages/Playlist";
 import AllPlaylists from "../pages/Allplaylists";
-import UploadSong from "../pages/Upload";
-import GetAllUsers from "./../pages/GetAllUsers";
-import GetAllSongs from "../pages/GetAllSongs";
 import EmailVerification from "../pages/EmailVerification";
 import RoleBasedRoutes from "./RoleBasedRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
@@ -99,18 +96,6 @@ export const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <AdminDashboard />,
-      },
-      {
-        path: "upload",
-        element: <UploadSong />,
-      },
-      {
-        path: "songs",
-        element: <GetAllSongs />,
-      },
-      {
-        path: "users",
-        element: <GetAllUsers />,
       },
     ],
   },

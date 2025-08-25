@@ -6,7 +6,7 @@ import GetAllSongs from "./GetAllSongs";
 import GetAllUsers from "./GetAllUsers";
 import GetAllArtists from "./GetAllArtists";
 import UploadSong from "./Upload";
-import AddArtistImage from "./AddArtistImage";
+import AddArtist from "./AddArtist";
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,8 +24,8 @@ const AdminDashboard = () => {
         return <GetAllArtists />;
       case "Upload Song":
         return <UploadSong />;
-      case "Add Artist Image":
-        return <AddArtistImage />;
+      case "Add Artist":
+        return <AddArtist />;
     }
   };
 
