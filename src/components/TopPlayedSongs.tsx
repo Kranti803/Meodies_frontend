@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useRef } from "react";
 
 export default function TopPlayedSongs() {
-  const {songs} = useAppSelector(state=>state.song)
+  const { topSongs } = useAppSelector((state) => state.song);
+
   const dispatch = useAppDispatch();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -48,7 +49,7 @@ export default function TopPlayedSongs() {
           ref={scrollContainerRef}
           className="flex space-x-4 overflow-x-scroll scrollbar-hide pb-4 scroll-smooth"
         >
-          {songs?.map((song, idx) => (
+          {topSongs?.map((song, idx) => (
             <div
               key={idx}
               className="flex-shrink-0 w-40 hover:bg-bgDark p-2 rounded-lg cursor-pointer"

@@ -5,7 +5,10 @@ import type { Iartist } from "../interfaces/artistsInterface";
 
 export const songApi = myApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSongs: builder.query<{ success: true; songs: Isong[] }, void>({
+    getAllSongs: builder.query<
+      { success: true; songs: Isong[]; topSongs: Isong[] },
+      void
+    >({
       query: () => ({
         url: "/song/all",
       }),
@@ -14,7 +17,12 @@ export const songApi = myApi.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           if (data.success) {
-            dispatch(setAllSongs(data.songs)); // saving songs to store
+            dispatch(
+              setAllSongs({
+                songs: data.songs,
+                topSongs: data.topSongs,
+              })
+            ); // saving songs to store
             dispatch(setCurrentSong(data.songs[0])); //setting the first song on the initail load
           }
         } catch (error) {
@@ -78,6 +86,14 @@ export const songApi = myApi.injectEndpoints({
         method: "PATCH",
       }),
     }),
+    getSearchedSongs: builder.query<
+      { success: true; results: Isong[] },
+      string
+    >({
+      query: (searchText) => ({
+        url: `/song/all?search=${searchText}`,
+      }),
+    }),
   }),
 });
 
@@ -90,4 +106,5 @@ export const {
   useUpdateRecentlyPlayedSongsMutation,
   useGetRecentlyPlayedSongsQuery,
   useIncreaseSongPlayCountMutation,
+  useGetSearchedSongsQuery
 } = songApi;

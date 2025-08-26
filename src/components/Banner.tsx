@@ -1,13 +1,13 @@
 import BannerImg from "../assets/banner4.png";
-import Navbar from "./Navbar";
 
 const Banner = () => {
   return (
     <section className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-xl overflow-hidden shadow-md font-primary">
-      <div className="absolute z-10 w-full">
-        <Navbar />
-      </div>
-      <img src={BannerImg} alt="Banner" className="absolute object-cover w-full h-full" />
+      <img
+        src={BannerImg}
+        alt="Banner"
+        className="absolute object-cover w-full h-full"
+      />
 
       <div className="absolute inset-0 text-sm grid grid-cols-12 items-center">
         <div className="col-span-12 md:col-span-6 px-6 md:px-16 space-y-6 z-10 pt-8 lg:pt-0">

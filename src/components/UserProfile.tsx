@@ -10,7 +10,7 @@ const UserProfile = ({ name }: { name: string }) => {
         className="w-12 h-12 rounded-full"
         referrerPolicy="no-referrer"
       />
-      <p className="text-primary font-semibold">{name}</p>
+      <p className="font-semibold">{name}</p>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import type { Isong } from "../../interfaces/songInterface";
 
 export interface SongsInterface {
   songs: Isong[];
+  topSongs: Isong[];
   currentSongPlayingIndex: number;
   isPlaying: boolean;
   isMute: boolean;
@@ -16,6 +17,7 @@ export interface SongsInterface {
 }
 const initialState: SongsInterface = {
   songs: [],
+  topSongs: [],
   currentSongPlayingIndex: 0,
   isPlaying: false,
   isMute: false,
@@ -31,8 +33,12 @@ const songSlice = createSlice({
   name: "songs",
   initialState,
   reducers: {
-    setAllSongs: (state, action: PayloadAction<Isong[]>) => {
-      state.songs = action.payload;
+    setAllSongs: (
+      state,
+      action: PayloadAction<{ songs: Isong[]; topSongs: Isong[] }>
+    ) => {
+      state.songs = action.payload.songs;
+      state.topSongs = action.payload.topSongs;
     },
 
     setIsPlaying: (state, action: PayloadAction<boolean>) => {
@@ -77,6 +83,6 @@ export const {
   setVolume,
   setIsRepeat,
   setTrendingSongs,
-  setCurrentSongPlayingIndex
+  setCurrentSongPlayingIndex,
 } = songSlice.actions;
 export default songSlice.reducer;

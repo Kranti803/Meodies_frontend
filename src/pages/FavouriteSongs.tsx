@@ -12,7 +12,7 @@ const FavouriteSongs = () => {
           <div className="divide-y divide-gray-700">
             {data?.likedSongs?.length ? (
               data?.likedSongs.map((song, idx) => (
-                <SongCard song={song} idx={idx} />
+                <SongCard song={song} idx={idx}key={idx} />
               ))
             ) : (
               <p>No songs Found</p>

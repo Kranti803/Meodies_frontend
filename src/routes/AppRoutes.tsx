@@ -23,6 +23,7 @@ import ArtistSongs from "../pages/ArtistSongs";
 import PlaylistDetails from "../pages/PlaylistDetails";
 import FavouriteSongs from "../pages/FavouriteSongs";
 import RecentlyPlayedSongs from "../pages/RecentlyPlayedSongs";
+import SearchResult from "../pages/SearchResult";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
           {
             path: "recently_played",
             element: <RecentlyPlayedSongs />,
+          },
+          {
+            path: "result/:searchText",
+            element: <SearchResult />,
           },
         ],
       },

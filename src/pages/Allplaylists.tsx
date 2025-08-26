@@ -8,12 +8,10 @@ const AllPlaylists = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data, isLoading, error } = useGetAllPlaylistUserQuery(user?._id!);
   const playlists = data?.playlists;
-  console.log(playlists);
 
   if (isLoading) {
     return (
       <>
-        <Navbar />
         <div className="flex justify-center items-center min-h-screen">
           <Spinner />
         </div>
@@ -24,7 +22,6 @@ const AllPlaylists = () => {
   if (error) {
     return (
       <>
-        <Navbar />
         <div className="flex justify-center items-center min-h-screen text-red-500">
           Failed to load playlists
         </div>
@@ -35,7 +32,6 @@ const AllPlaylists = () => {
   if (!playlists?.length) {
     return (
       <>
-        <Navbar />
         <div className="flex justify-center items-center min-h-screen text-gray-400 font-primary">
           No playlists available
         </div>

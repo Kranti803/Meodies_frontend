@@ -1,9 +1,6 @@
-import Navbar from "../components/Navbar";
-
 const Contact = () => {
   return (
     <>
-    <Navbar/>
     <div className="max-h-screen bg-secondary text-white px-1 lg:px-6 py-12 flex items-center justify-center w-full">
       <div className="w-full max-w-4xl bg-bgDark rounded-2xl shadow-lg p-8 md:p-12">
         <h2 className="text-4xl font-bold mb-6 text-primary">Contact Us</h2>
@@ -42,7 +39,7 @@ const Contact = () => {
           <div className="md:col-span-2 text-right">
             <button
               type="submit"
-              className="bg-[#62d962] hover:scale-90 cursor-pointer transition px-6 py-2 rounded-lg font-semibold"
+              className="bg-primary hover:scale-90 cursor-pointer transition px-6 py-2 rounded-lg font-semibold"
             >
               Send Message
             </button>

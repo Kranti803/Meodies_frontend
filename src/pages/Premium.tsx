@@ -1,9 +1,6 @@
-import Navbar from "../components/Navbar";
-
 const Premium = () => {
   return (
     <>
-      <Navbar />
       <div className="max-h-screen bg-inherit text-white px-1 lg:px-6 py-12 flex items-center justify-center">
         <div className="max-w-4xl bg-bgDark p-10 rounded-2xl shadow-lg space-y-8 text-center">
           <h1 className="text-4xl font-bold text-primary">Go Premium</h1>

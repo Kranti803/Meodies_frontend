@@ -4,7 +4,7 @@ import TopPlayedSongs from "./TopPlayedSongs"
 
 const Main = () => {
   return (
-    <section className='min-h-screen pt-2 md:py-4'>
+    <section className='min-h-screen md:py-4'>
         <Banner/>
         <TopPlayedSongs/>
         <TrendingSongs/>

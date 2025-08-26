@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import "../index.css";
 import { useSidebar } from "../context/sideBarContext";
 import MusicPlayer from "../components/Player";
+import Navbar from "../components/Navbar";
 
 const MainLayout = () => {
   const { isOpen } = useSidebar();
@@ -19,8 +20,9 @@ const MainLayout = () => {
         <Sidebar />
       </section>
 
-      {/* Main Content*/}
+
       <aside className="ml-0 w-full h-screen overflow-y-scroll scrollbar-hide p-4">
+        <Navbar/>
         <Outlet />
         <MusicPlayer />
       </aside>
@@ -30,4 +32,4 @@ const MainLayout = () => {
 
 export default MainLayout;
 
-/* <aside className="flex-auto ml-4 bg-black overflow-hidden"> */
+
