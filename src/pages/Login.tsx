@@ -32,7 +32,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:4500/auth/google";
+    window.location.href = "https://melodies-backend-6.onrender.com/auth/google";
   };
 
   if (user) {
