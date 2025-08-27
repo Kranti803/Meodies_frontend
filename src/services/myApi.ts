@@ -5,6 +5,7 @@ export const myApi = createApi({
   tagTypes: ["LikedSongs"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://melodies-backend-6.onrender.com/api",
+    // baseUrl: "http://localhost:8000/api",
     credentials: "include",
   }),
   endpoints: () => ({}), //extended in feature api slices

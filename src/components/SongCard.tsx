@@ -38,7 +38,7 @@ const SongCard = ({
     <>
       <div
         onClick={() => dispatch(setCurrentSong(song))}
-        className="font-primary grid grid-cols-[1fr_1fr_auto_auto] gap-x-2 py-4 px-2 my-2 hover:bg-bgDark rounded-lg transition cursor-pointer"
+        className="font-primary grid grid-cols-[3fr_auto_auto] md:grid-cols-[1fr_1fr_auto_auto] gap-x-2 py-4 px-2 my-2 hover:bg-bgDark rounded-lg transition cursor-pointer"
       >
         <div className="flex items-center gap-3">
           <span className="text-gray-400 w-6 text-sm">{idx + 1}</span>
@@ -49,7 +49,7 @@ const SongCard = ({
           />
           <div>
             <h3 className="text-sm font-semibold">{song?.title}</h3>
-            <p className="text-xs text-gray-400 truncate">
+            <p className="text-xs text-gray-400 truncate hidden md:block">
               {song?.artists.join(", ")}
             </p>
           </div>
