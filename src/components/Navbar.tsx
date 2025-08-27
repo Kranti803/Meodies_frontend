@@ -1,6 +1,5 @@
 import { Menu } from "lucide-react";
 import { useSidebar } from "../context/sideBarContext";
-import AuthButtons from "./AuthButtons";
 import NavLinks from "./NavLinks";
 import { useAppSelector } from "../store/hooks";
 import UserProfile from "./UserProfile";
@@ -18,11 +17,7 @@ const Navbar = () => {
       </button>
       <SearchInput />
       <NavLinks className="hidden lg:flex lg:gap-x-8" />
-      {!user ? (
-        <AuthButtons className="md:flex gap-x-4 hidden" />
-      ) : (
-        <UserProfile name={user?.name} />
-      )}
+      {user && <UserProfile name={user?.name} />}
     </section>
   );
 };
