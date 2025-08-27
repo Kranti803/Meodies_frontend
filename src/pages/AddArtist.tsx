@@ -33,7 +33,7 @@ const AddArtist = () => {
   };
 
   return (
-    <div className="bg-secondary p-6 rounded-xl shadow text-white font-primary">
+    <div className="bg-secondary p-2 md:p-6 rounded-xl shadow text-white font-primary">
       <h2 className="text-xl font-bold mb-4">Add Artist</h2>
 
       <input

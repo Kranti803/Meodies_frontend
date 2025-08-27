@@ -13,7 +13,7 @@ const DashboardSidebar = ({
 }) => {
   return (
     <aside
-      className={`w-64 bg-bgDark p-6 fixed h-screen opacity-0 md:opacity-100 md:-translate-x-[0%] ${
+      className={`w-64 bg-bgDark p-6 fixed z-50 h-screen opacity-0 md:opacity-100 md:-translate-x-[0%] ${
         sidebarOpen
           ? "-translate-x-[0%] opacity-100 shadow-primary shadow-2xl"
           : "-translate-x-[100%] opacity-0"

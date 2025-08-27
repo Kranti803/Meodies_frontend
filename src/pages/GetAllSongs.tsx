@@ -21,7 +21,7 @@ const GetAllSongs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-inherit text-white p-8 font-primary">
+    <div className="min-h-screen bg-inherit text-white p-2 md:p-8 font-primary">
       <h1 className="text-3xl font-bold text-primary mb-6 font-primary">
         All Songs
       </h1>

@@ -33,7 +33,7 @@ const GetAllUsers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-inherit font-primary text-white p-8">
+    <div className="min-h-screen bg-inherit font-primary text-white p-2 md:p-8">
       <h1 className="text-3xl font-bold text-primary mb-6">All Users</h1>
 
       <div className="overflow-x-auto rounded-xl shadow bg-[#2a2a2a] p-6">
@@ -66,7 +66,7 @@ const GetAllUsers = () => {
                 <td className="border border-gray-700 px-4 py-2 capitalize">
                   {user.role}
                 </td>
-                <td className="border border-gray-700 px-4 py-2 space-x-2">
+                <td className="border border-gray-700 px-4 py-2 space-x-2 flex flex-col gap-y-2">
                   <button
                     disabled={isLoading}
                     onClick={() => toggleRole(user._id)}
@@ -76,7 +76,7 @@ const GetAllUsers = () => {
                   </button>
                   <button
                     onClick={() => handleDeleteUser(user._id)}
-                    className="bg-red-600 px-3 py-2 rounded hover:bg-red-700 transition"
+                    className="bg-red-600 px-3 py-2 rounded hover:bg-red-700 transition grid place-items-center"
                   >
                     <Trash size={16} />
                   </button>

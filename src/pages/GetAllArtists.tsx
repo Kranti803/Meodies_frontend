@@ -18,7 +18,7 @@ const GetAllArtists = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary text-white p-8">
+    <div className="min-h-screen bg-secondary text-white p-2 md:p-8">
       <h1 className="text-3xl font-bold text-primary mb-6">All Artists</h1>
 
       <div className="overflow-x-auto rounded-xl shadow bg-bgDark p-6">

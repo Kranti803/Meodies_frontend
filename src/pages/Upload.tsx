@@ -22,7 +22,7 @@ const UploadSong = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary text-white p-10 font-primary">
+    <div className="min-h-screen bg-secondary text-white p-2 md:p-10 font-primary">
       <h1 className="text-3xl font-bold text-primary mb-8">Upload New Song</h1>
       <form
         onSubmit={handleSubmit}
