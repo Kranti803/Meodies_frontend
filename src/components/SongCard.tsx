@@ -1,10 +1,17 @@
-import { setCurrentSong } from "../features/songs/songSlice";
+import {
+  setAutoPlay,
+  setCurrentSong,
+  setIsPlaying,
+} from "../features/songs/songSlice";
 import type { Isong } from "../interfaces/songInterface";
 import { useAppDispatch } from "../store/hooks";
 import { Heart, Plus } from "lucide-react";
 import { useState } from "react";
 import SelectPlaylistModal from "./SelectPlaylistModal";
-import { useToggleLikedSongsMutation, useGetAllFavouriteSongsQuery } from "../services/songApi";
+import {
+  useToggleLikedSongsMutation,
+  useGetAllFavouriteSongsQuery,
+} from "../services/songApi";
 import { toast } from "react-toastify";
 
 const SongCard = ({
@@ -37,7 +44,11 @@ const SongCard = ({
   return (
     <>
       <div
-        onClick={() => dispatch(setCurrentSong(song))}
+        onClick={() => {
+          dispatch(setCurrentSong(song));
+          dispatch(setAutoPlay(true));
+          dispatch(setIsPlaying(true));
+        }}
         className="font-primary grid grid-cols-[3fr_auto_auto] md:grid-cols-[1fr_1fr_auto_auto] gap-x-2 py-4 px-2 my-2 hover:bg-bgDark rounded-lg transition cursor-pointer"
       >
         <div className="flex items-center gap-3">
@@ -45,6 +56,7 @@ const SongCard = ({
           <img
             src={song?.image?.url}
             alt="Track"
+            loading="lazy"
             className="w-12 h-12 rounded-md object-cover"
           />
           <div>

@@ -16,6 +16,7 @@ const AllArtists = () => {
             >
               <img
                 src={artist?.image?.url}
+                loading="lazy"
                 alt="Artist"
                 className="w-24 h-24 rounded-full object-cover mb-3"
               />

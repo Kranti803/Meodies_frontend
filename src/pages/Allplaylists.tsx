@@ -60,6 +60,7 @@ const AllPlaylists = () => {
                 <img
                   src={coverImage}
                   alt={playlist.playlistName}
+                  loading='lazy'
                   className="w-full h-48 object-center object-cover rounded-lg mb-4"
                 />
                 <h3 className="text-xl font-semibold mb-1 truncate">

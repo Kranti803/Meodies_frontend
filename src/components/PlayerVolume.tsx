@@ -12,7 +12,7 @@ const PlayerVolume = ({ handleVolumeChange }: PlayerVolumeProps) => {
   const { isMute, volume } = useAppSelector((state) => state.song);
 
   return (
-    <div className="hidden sm:flex items-center gap-2 w-1/3 justify-end">
+    <div className="hidden md:flex items-center gap-2 w-1/3 justify-end">
       <button
         className="border-none outline-none cursor-pointer"
         onClick={() => dispatch(setIsMute(!isMute))}

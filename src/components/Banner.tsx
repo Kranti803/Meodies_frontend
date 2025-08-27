@@ -7,6 +7,7 @@ const Banner = () => {
         src={BannerImg}
         alt="Banner"
         className="absolute object-cover w-full h-full"
+        loading="lazy"
       />
 
       <div className="absolute inset-0 text-sm grid grid-cols-12 items-center">

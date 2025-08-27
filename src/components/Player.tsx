@@ -108,7 +108,7 @@ const MusicPlayer = () => {
         autoPlay={autoPlay}
         onLoadedMetadata={handleLoadedMetaData}
       />
-      <div className="h-28 fixed bottom-0 left-0 right-0 bg-bgDark text-white shadow-lg px-4 py-3 flex items-center justify-center sm:justify-between z-50">
+      <div className="min-h-28 fixed bottom-0 left-0 right-0 bg-bgDark text-white shadow-lg px-4 py-3 flex flex-col md:flex-row items-center justify-center sm:justify-between z-50">
         <PlayerSongInfo />
         <div className="flex flex-col items-center gap-1 w-1/3">
           <PlayerControlsButtons

@@ -22,13 +22,15 @@ const App = () => {
     }
   }, [data, isSuccess, dispatch, isLoading]);
 
-  if (!isAuthResolved || isSongsLoading) return <SplashScreen />;
+  const isAppLoading = !isAuthResolved || isSongsLoading || isLoading;
+  if (isAppLoading) return <SplashScreen />;
+
   return (
-    <SidebarProvider>
-      <RouterProvider router={router} />
-      <ToastContainer />
-    </SidebarProvider>
-  );
+  <SidebarProvider>
+    <RouterProvider router={router} />
+    <ToastContainer />
+  </SidebarProvider>
+);
 };
 
 export default App;
