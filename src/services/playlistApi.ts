@@ -12,6 +12,7 @@ export const playlistApi = myApi.injectEndpoints({
         url: "/playlist/create",
         body: playlistFormData,
       }),
+      invalidatesTags:["Playlist"]
     }),
 
     getAllPlaylist: builder.query<
@@ -29,6 +30,7 @@ export const playlistApi = myApi.injectEndpoints({
       query: (userId) => ({
         url: `/playlist/all/${userId}`,
       }),
+      providesTags:["Playlist"]
     }),
 
     addToPlaylist: builder.mutation<
@@ -39,7 +41,17 @@ export const playlistApi = myApi.injectEndpoints({
         method: "PATCH",
         url: `/playlist/${playlistId}/add/${songId}`,
       }),
+      invalidatesTags:["Playlist"]
     }),
+    // removeSongFromPlaylist: builder.mutation<
+    //   { success: true; message: string },
+    //   { playlistId: string; songId: string }
+    // >({
+    //   query: ({ playlistId, songId }) => ({
+    //     method: "PATCH",
+    //     url: `/playlist/${playlistId}/add/${songId}`,
+    //   }),
+    // }),
     getAllPlaylistSongs: builder.query<
       { success: true; playlistWithSongs: Iplaylist },
       string

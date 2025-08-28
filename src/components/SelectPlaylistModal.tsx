@@ -1,8 +1,9 @@
 import type { Iplaylist } from "../interfaces/playlistInterface";
 import {
   useAddToPlaylistMutation,
-  useGetAllPlaylistQuery,
+  useGetAllPlaylistUserQuery,
 } from "../services/playlistApi";
+import { useAppSelector } from "../store/hooks";
 import Spinner from "./Spinner";
 import { toast } from "react-toastify";
 
@@ -12,7 +13,8 @@ interface SelectPlaylistModalProps {
 }
 
 const SelectPlaylistModal = ({ songId, onClose }: SelectPlaylistModalProps) => {
-  const { data, isLoading } = useGetAllPlaylistQuery();
+  const { user } = useAppSelector((state) => state.auth);
+  const { data, isLoading } = useGetAllPlaylistUserQuery(user?._id!);
   const playlists = data?.playlists;
   const [addToPlaylist, { isLoading: adding }] = useAddToPlaylistMutation();
 

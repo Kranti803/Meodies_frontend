@@ -2,10 +2,13 @@ import { useGetAllPlaylistUserQuery } from "../services/playlistApi";
 import Spinner from "../components/Spinner";
 import { useAppSelector } from "../store/hooks";
 import { Link } from "react-router";
+import defaultCoverImg from '../assets/SongCoverImage.webp'
 
 const AllPlaylists = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const { data, isLoading, error } = useGetAllPlaylistUserQuery(user?._id!);
+  const { data, isLoading, error, } = useGetAllPlaylistUserQuery(
+    user?._id!
+  );
   const playlists = data?.playlists;
 
   if (isLoading) {
@@ -46,7 +49,7 @@ const AllPlaylists = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {playlists.map((playlist) => {
             // Using the first song's image as playlist cover
-            const coverImage = playlist.songs?.[0]?.image?.url;
+            const coverImage = playlist.songs?.[0]?.image?.url ?? defaultCoverImg ;
             const playlistId = playlist?._id;
 
             return (
@@ -58,7 +61,7 @@ const AllPlaylists = () => {
                 <img
                   src={coverImage}
                   alt={playlist.playlistName}
-                  loading='lazy'
+                  loading="lazy"
                   className="w-full h-48 object-center object-cover rounded-lg mb-4"
                 />
                 <h3 className="text-xl font-semibold mb-1 truncate">
