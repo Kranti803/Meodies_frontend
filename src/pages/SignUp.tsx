@@ -3,7 +3,8 @@ import { useRegisterUserMutation } from "../services/authApi";
 import { toast } from "react-toastify";
 import { Link, Navigate, useNavigate } from "react-router";
 import Spinner from "../components/Spinner";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { setTempUserEmail } from "../features/auth/authSlice";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -15,20 +16,23 @@ const Signup = () => {
   const [registerUser, { isLoading }] = useRegisterUserMutation();
   const { user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const result = await registerUser(formData).unwrap(); //mutation hooks returns promise
       toast.success(result?.message);
+      dispatch(setTempUserEmail(formData.email));
       navigate("/verify_email");
     } catch (error: any) {
       toast.error(error?.data?.message);
     }
   };
 
-   const handleGoogleLogin = () => {
-    window.location.href = "https://melodies-backend-6.onrender.com/auth/google";
+  const handleGoogleLogin = () => {
+    window.location.href =
+      "https://melodies-backend-6.onrender.com/auth/google";
   };
 
   if (user) {
@@ -89,9 +93,10 @@ const Signup = () => {
 
         <div className="text-center text-gray-500">or</div>
 
-        <button 
-        onClick={handleGoogleLogin}
-        className="w-full flex items-center justify-center gap-2 border border-gray-600 hover:bg-[#2c2c2c] transition py-2 rounded-lg">
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-2 border border-gray-600 hover:bg-[#2c2c2c] transition py-2 rounded-lg"
+        >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"

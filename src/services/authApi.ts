@@ -35,6 +35,15 @@ export const authAPI = myApi.injectEndpoints({
       }),
     }),
 
+    confirmEmailVerification: builder.query<
+      { success: boolean; message: string },
+      { userId: string,token:string }
+    >({
+      query: ({userId,token}) => ({
+        url: `/user/email_verify/${userId}/${token}`,
+        credentials: "include",
+      }),
+    }),
     resendEmailVerificationLink: builder.mutation<
       { success: boolean; message: string },
       { email: string }
@@ -87,4 +96,5 @@ export const {
   useResendEmailVerificationLinkMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useConfirmEmailVerificationQuery
 } = authAPI;

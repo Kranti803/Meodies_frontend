@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import RoleBasedRoutes from "./RoleBasedRoutes";
 import ProtectedRoutes from "./ProtectedRoutes";
 import SplashScreen from "../pages/SplashScreen";
+import EmailVerificationStatus from "../pages/EmailVarificationStatus";
 
 // Lazy load pages for optimization
 const Home = lazy(() => import("../pages/Home"));
@@ -30,7 +31,7 @@ const SearchResult = lazy(() => import("../pages/SearchResult"));
 
 // Helper wrapper for Suspense
 const withSuspense = (Component: React.FC) => (
-  <Suspense fallback={<SplashScreen/>}>
+  <Suspense fallback={<SplashScreen />}>
     <Component />
   </Suspense>
 );
@@ -52,10 +53,19 @@ export const router = createBrowserRouter([
           { path: "playlist", element: withSuspense(Playlist) },
           { path: "discover", element: withSuspense(Discover) },
           { path: "artists", element: withSuspense(AllArtists) },
-          { path: "artist/:artistName/:artistId", element: withSuspense(ArtistSongs) },
-          { path: "playlist/:playlistId/details", element: withSuspense(PlaylistDetails) },
+          {
+            path: "artist/:artistName/:artistId",
+            element: withSuspense(ArtistSongs),
+          },
+          {
+            path: "playlist/:playlistId/details",
+            element: withSuspense(PlaylistDetails),
+          },
           { path: "favourites", element: withSuspense(FavouriteSongs) },
-          { path: "recently_played", element: withSuspense(RecentlyPlayedSongs) },
+          {
+            path: "recently_played",
+            element: withSuspense(RecentlyPlayedSongs),
+          },
           { path: "result/:searchText", element: withSuspense(SearchResult) },
         ],
       },
@@ -64,14 +74,16 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: <RoleBasedRoutes />,
-    children: [
-      { path: "dashboard", element: withSuspense(AdminDashboard) },
-    ],
+    children: [{ path: "dashboard", element: withSuspense(AdminDashboard) }],
   },
   { path: "/login", element: withSuspense(Login) },
   { path: "/signup", element: withSuspense(SignUp) },
   { path: "/forgotpassword", element: withSuspense(ForgotPassword) },
   { path: "/resetpassword/:resetToken", element: withSuspense(ResetPassword) },
   { path: "/verify_email", element: withSuspense(EmailVerification) },
+  {
+    path: "/email_verify/:userId/:token",
+    element: withSuspense(EmailVerificationStatus),
+  },
   { path: "/passwordsuccess", element: withSuspense(PasswordSuccess) },
 ]);

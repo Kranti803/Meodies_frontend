@@ -40,9 +40,9 @@ const ResetPassword = () => {
   }, [user]);
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#181818] text-white px-4">
-      <div className="bg-[#1f1f1f] w-full max-w-md rounded-2xl shadow-lg p-8 space-y-6">
-        <h2 className="text-3xl font-bold text-[#62d962] text-center">
+    <div className="min-h-screen flex items-center justify-center bg-secondary text-white px-4">
+      <div className="bg-bgDark w-full max-w-md rounded-2xl shadow-lg p-8 space-y-6">
+        <h2 className="text-3xl font-bold text-primary text-center">
           Reset Password
         </h2>
 
@@ -53,7 +53,7 @@ const ResetPassword = () => {
               onChange={(e) => setNewPassword(e.target.value)}
               type="password"
               placeholder="••••••••"
-              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#62d962]"
+              className="w-full px-4 py-2 bg-bgDark border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div>
@@ -62,14 +62,14 @@ const ResetPassword = () => {
               onChange={(e) => setConfirmNewPassword(e.target.value)}
               type="password"
               placeholder="••••••••"
-              className="w-full px-4 py-2 bg-[#2a2a2a] border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#62d962]"
+              className="w-full px-4 py-2 bg-bgDark border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full grid place-items-center bg-[#62d962] hover:bg-[#58c558] transition py-2 rounded-md font-semibold"
+            className="w-full grid place-items-center bg-primary transition py-2 rounded-md font-semibold"
           >
             {isLoading ? <Spinner /> : "Change Password"}
           </button>

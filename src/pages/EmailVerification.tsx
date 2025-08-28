@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { removeTempUserEmail } from "../features/auth/authSlice";
 import { useEffect } from "react";
+import Spinner from "../components/Spinner";
 
 const EmailVerification = () => {
   const [resendEmailVerificationLink, { isLoading }] =
@@ -30,7 +31,7 @@ const EmailVerification = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#181818] text-white px-4">
       <div className="bg-[#1f1f1f] w-full max-w-md rounded-2xl shadow-lg p-8 space-y-6 text-center">
-        <h2 className="text-3xl font-bold text-[#62d962]">Verify Your Email</h2>
+        <h2 className="text-3xl font-bold text-primary">Verify Your Email</h2>
         <p className="text-gray-300">
           We have sent a verification link to your email address.
           <br />
@@ -44,20 +45,20 @@ const EmailVerification = () => {
           className="w-24 h-24 mx-auto mt-4 filter invert"
         />
 
-        <p className="text-gray-400 text-sm">
+        <p className="text-gray-400 text-sm flex flex-col justify-center items-center">
           Didn’t receive the email? Check your spam folder or{" "}
           <button
             onClick={handleResendVerification}
-            className="text-[#62d962] hover:underline"
+            className="text-primary hover:underline"
             disabled={isLoading}
           >
-            Resend Verification
+            {isLoading ? <Spinner /> : "Resend Verification"}
           </button>
         </p>
 
         <Link
           to="/login"
-          className="inline-block mt-4 bg-[#62d962] hover:bg-[#62d962]/90 transition py-2 px-6 rounded-lg font-semibold"
+          className="inline-block mt-4 bg-primary hover:bg-primary/90 transition py-2 px-6 rounded-lg font-semibold"
         >
           Go to Login
         </Link>
