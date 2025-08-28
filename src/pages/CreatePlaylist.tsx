@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCreatePlaylistMutation } from "../services/playlistApi";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const CreatePlaylist = () => {
   const [playlistFormData, setPlaylistFormData] = useState({
@@ -26,13 +26,13 @@ const CreatePlaylist = () => {
   };
 
   return (
-    <div className="font-primary fixed inset-0 z-50 bg-transparent flex items-center justify-center px-4 pointer-events-none">
-      <div className="bg-bgDark text-white rounded-2xl shadow-lg w-full max-w-md p-6 space-y-6 animate-fade-in pointer-events-auto">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-primary">Create Playlist</h2>
-        </div>
+    <>
+      <h2 className="text-2xl font-semibold my-6  px-2 md:px-6 text-primary">
+        Create Playlist
+      </h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+      <div className="font-primary min-h-screen bg-inherit text-white px-4 py-8 flex flex-col items-center">
+        <form className="w-full max-w-md space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm mb-1">Playlist Name</label>
             <input
@@ -67,12 +67,13 @@ const CreatePlaylist = () => {
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
-            <Link
-              to="/"
+            <button
+              type="button"
+              onClick={() => navigate("/")}
               className="px-4 py-2 rounded-md border border-gray-500 text-gray-300 hover:bg-[#2c2c2c]"
             >
               Cancel
-            </Link>
+            </button>
             <button
               type="submit"
               disabled={isLoading}
@@ -83,7 +84,7 @@ const CreatePlaylist = () => {
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -27,13 +27,13 @@ const Banner = () => {
           <div className="flex gap-4 pt-10 lg:pt-0">
             <button
               aria-label="Discover music now"
-              className="bg-primary text-white px-4 py-2 rounded-md font-semibold cursor-pointer hover:scale-95 transition-all ease-in-out duration-200"
+              className="bg-primary text-white px-2 py-1 md:px-4 md:py-2 rounded-md font-semibold cursor-pointer hover:scale-95 transition-all ease-in-out duration-200"
             >
               Discover Now
             </button>
             <button
               aria-label="Create a playlist"
-              className="border-2 border-primary text-primary px-4 py-2 rounded-md font-semibold cursor-pointer"
+              className="border-2 border-primary text-primary px-2 py-1 md:px-4 md:py-2 rounded-md font-semibold cursor-pointer"
             >
               Create Playlist
             </button>

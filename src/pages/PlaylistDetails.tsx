@@ -24,17 +24,14 @@ const PlaylistDetails = () => {
   const coverImage = playlistWithSongs.songs?.[0]?.image?.url ?? DefaultCoverImg;
 
   return (
-    <div className="flex flex-col">
-      {/* ======= Banner Section ======= */}
+    <div className="flex flex-col mt-6 h-screen">
       <div className=" rounded-lg flex flex-col md:flex-row items-center md:items-end bg-bgDark font-primary text-white p-6 gap-6">
-        {/* Cover Image */}
         <img
           src={coverImage}
           alt={playlistWithSongs.playlistName}
           className="w-48 h-48 object-cover rounded-lg shadow-lg"
         />
 
-        {/* Playlist Info */}
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-bold">{playlistWithSongs.playlistName}</h1>
           <p className="text-gray-300">{playlistWithSongs.description}</p>

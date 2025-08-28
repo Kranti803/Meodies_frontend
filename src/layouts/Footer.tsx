@@ -34,7 +34,7 @@ const Footer = () => {
           Access
         </h2>
         <ul className="flex flex-col gap-2 text-sm">
-          <li>Explor</li>
+          <li>Explore</li>
           <li>Artists</li>
           <li>Playlists</li>
           <li>Albums</li>
@@ -51,7 +51,7 @@ const Footer = () => {
           <li>About</li>
           <li>Policy</li>
           <li>Social Media</li>
-          <li>Soppurt</li>
+          <li>Support</li>
         </ul>
       </div>
 

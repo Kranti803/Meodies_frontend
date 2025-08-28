@@ -1,4 +1,3 @@
-import Navbar from "../components/Navbar";
 import { useGetAllPlaylistUserQuery } from "../services/playlistApi";
 import Spinner from "../components/Spinner";
 import { useAppSelector } from "../store/hooks";
@@ -41,7 +40,6 @@ const AllPlaylists = () => {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-transparent text-white px-6 py-8 font-primary">
         <h1 className="text-3xl font-bold mb-6">Your Playlists</h1>
 

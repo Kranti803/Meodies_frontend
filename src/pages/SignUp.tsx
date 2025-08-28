@@ -27,6 +27,10 @@ const Signup = () => {
     }
   };
 
+   const handleGoogleLogin = () => {
+    window.location.href = "https://melodies-backend-6.onrender.com/auth/google";
+  };
+
   if (user) {
     return <Navigate to="/" replace />;
   }
@@ -85,7 +89,9 @@ const Signup = () => {
 
         <div className="text-center text-gray-500">or</div>
 
-        <button className="w-full flex items-center justify-center gap-2 border border-gray-600 hover:bg-[#2c2c2c] transition py-2 rounded-lg">
+        <button 
+        onClick={handleGoogleLogin}
+        className="w-full flex items-center justify-center gap-2 border border-gray-600 hover:bg-[#2c2c2c] transition py-2 rounded-lg">
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"

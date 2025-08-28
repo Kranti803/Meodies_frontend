@@ -45,6 +45,7 @@ const Sidebar = () => {
               const Icon = item.icon;
               return (
                 <NavLink
+                onClick={()=>(closeSidebar())}
                   to={item?.link}
                   key={index}
                   className={({ isActive }) =>
